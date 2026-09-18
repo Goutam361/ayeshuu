@@ -1452,10 +1452,10 @@
             <div class="activity-check-box">✓</div>
           </div>
 
-          <div class="activity-option-item selected" onclick="selectActivity('Long drive', this)">
-            <span class="activity-opt-icon">🏍️</span>
+          <div class="activity-option-item selected" onclick="selectActivity('Trip', this)">
+            <span class="activity-opt-icon">🚗</span>
             <div class="activity-opt-info">
-              <span class="activity-opt-title">Long drive</span>
+              <span class="activity-opt-title">Trip</span>
             </div>
             <div class="activity-check-box">✓</div>
           </div>
@@ -1503,7 +1503,7 @@
             <span class="confirm-item-icon">✨</span>
             <div class="confirm-item-text">
               <span class="confirm-item-label">Date Plan</span>
-              <span class="confirm-item-val" id="confirmedActivityText">Long drive 🏍️</span>
+              <span class="confirm-item-val" id="confirmedActivityText">Trip 🚗</span>
             </div>
           </div>
         </div>
@@ -2144,7 +2144,7 @@
   });
 
   /* Stage navigation & Date Type selection */
-  let selectedActivity = "Long drive";
+  let selectedActivity = "Trip";
 
   function selectActivity(activityName, el) {
     selectedActivity = activityName;
@@ -2223,7 +2223,7 @@
 
     if (alertEl) alertEl.textContent = '';
 
-    // Next step: Choose Date Plan (Movies, Long drive, Dominos)
+    // Next step: Choose Date Plan (Movies, Trip, Dominos)
     const s1 = document.getElementById('successStage1');
     const s2 = document.getElementById('successStage2');
     const sAct = document.getElementById('successStageActivity');
@@ -2239,7 +2239,7 @@
     const chosenTime = timeSelect ? timeSelect.value : '';
     const chosenTimeText = timeSelect && timeSelect.selectedIndex >= 0 ? timeSelect.options[timeSelect.selectedIndex].text : chosenTime;
 
-    let activityIcon = '🏍️';
+    let activityIcon = '🚗';
     if (selectedActivity === 'Movies') activityIcon = '🎬';
     else if (selectedActivity === 'Dominos') activityIcon = '🍕';
 
