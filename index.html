@@ -717,30 +717,6 @@
       border-color: #df538a;
       box-shadow: 0 0 0 3px rgba(223, 83, 138, 0.14);
     }
-    .custom-note-wrapper {
-      margin-top: 14px;
-      margin-bottom: 14px;
-      text-align: left;
-    }
-    .custom-note-textarea {
-      width: 100%;
-      padding: 11px 14px;
-      background: #ffffff;
-      border: 2px solid #e0d5d7;
-      border-radius: 14px;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 0.95rem;
-      font-weight: 500;
-      color: #2b1f23;
-      outline: none;
-      box-sizing: border-box;
-      resize: none;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .custom-note-textarea:focus {
-      border-color: #df538a;
-      box-shadow: 0 0 0 3px rgba(223, 83, 138, 0.14);
-    }
     @keyframes fadeInStage {
       from { opacity: 0; transform: scale(0.96) translateY(12px); }
       to { opacity: 1; transform: scale(1) translateY(0); }
@@ -1450,20 +1426,15 @@
           <div class="activity-option-item" id="optCustomActivity" onclick="selectActivity('Custom', this)">
             <span class="activity-opt-icon">✨</span>
             <div class="activity-opt-info">
-              <span class="activity-opt-title">Kuch Aur (Your Idea)</span>
+              <span class="activity-opt-title">Your Plan</span>
             </div>
             <div class="activity-check-box">✓</div>
           </div>
         </div>
 
         <div id="customPlanWrapper" class="custom-plan-wrapper" style="display: none;">
-          <label class="custom-plan-label" for="customPlanInput">Apna plan yahan likho ✍️</label>
-          <input type="text" id="customPlanInput" class="custom-plan-input" placeholder="e.g. Ice cream, Sunset walk, Shopping..." maxlength="60" />
-        </div>
-
-        <div class="custom-note-wrapper">
-          <label class="custom-note-label" for="customNoteInput">Kuch aur kehna chahti ho? 💌 <span class="optional-badge">(Optional)</span></label>
-          <textarea id="customNoteInput" class="custom-note-textarea" rows="2" placeholder="Koi special wish, instruction ya sweet note..." maxlength="200"></textarea>
+          <label class="custom-plan-label" for="customPlanInput">Your Plan ✍️</label>
+          <input type="text" id="customPlanInput" class="custom-plan-input" placeholder="Type your plan here..." maxlength="60" />
         </div>
 
         <div id="activityAlertMsg" class="date-alert-msg"></div>
@@ -1501,13 +1472,6 @@
             <div class="confirm-item-text">
               <span class="confirm-item-label">Date Plan</span>
               <span class="confirm-item-val" id="confirmedActivityText">Similipal 🚗</span>
-            </div>
-          </div>
-          <div class="confirm-detail-item" id="confirmNoteItem" style="display: none;">
-            <span class="confirm-item-icon">💌</span>
-            <div class="confirm-item-text">
-              <span class="confirm-item-label">Her Note</span>
-              <span class="confirm-item-val" id="confirmedNoteText">-</span>
             </div>
           </div>
         </div>
@@ -2249,7 +2213,6 @@
   function submitActivityChoice() {
     const alertEl = document.getElementById('activityAlertMsg');
     const customInp = document.getElementById('customPlanInput');
-    const noteInp = document.getElementById('customNoteInput');
 
     let finalPlan = selectedActivity;
     let activityIcon = '✨';
@@ -2257,7 +2220,7 @@
     if (selectedActivity === 'Custom') {
       const userPlan = customInp ? customInp.value.trim() : '';
       if (!userPlan) {
-        if (alertEl) alertEl.textContent = "Please apna plan yahan likho! ✍️";
+        if (alertEl) alertEl.textContent = "Please type your plan! ✍️";
         if (customInp) customInp.focus();
         return;
       }
@@ -2270,8 +2233,6 @@
     } else if (selectedActivity === 'Dominos') {
       activityIcon = '🍕';
     }
-
-    const noteText = noteInp ? noteInp.value.trim() : '';
 
     const timeSelect = document.getElementById('timeSelect');
     const chosenTime = timeSelect ? timeSelect.value : '';
@@ -2294,22 +2255,13 @@
     const dayDisplay = document.getElementById('confirmedDayText');
     const timeDisplay = document.getElementById('confirmedTimeText');
     const actDisplay = document.getElementById('confirmedActivityText');
-    const noteRow = document.getElementById('confirmNoteItem');
-    const noteDisplay = document.getElementById('confirmedNoteText');
 
     if (dayDisplay) dayDisplay.textContent = selectedDateStr;
     if (timeDisplay) timeDisplay.textContent = chosenTimeText;
     if (actDisplay) actDisplay.textContent = `${finalPlan} ${activityIcon}`;
 
-    if (noteText) {
-      if (noteRow) noteRow.style.display = 'flex';
-      if (noteDisplay) noteDisplay.textContent = `"${noteText}"`;
-    } else {
-      if (noteRow) noteRow.style.display = 'none';
-    }
-
     // Send instant email notification to your inbox
-    sendDatePlanEmail(selectedDateStr, chosenTimeText, `${finalPlan} ${activityIcon}`, noteText);
+    sendDatePlanEmail(selectedDateStr, chosenTimeText, `${finalPlan} ${activityIcon}`);
   }
 
   /* ─────────────────────────────────────────
@@ -2335,7 +2287,7 @@
     }
   }
 
-  function sendDatePlanEmail(dateStr, timeStr, planStr, noteStr) {
+  function sendDatePlanEmail(dateStr, timeStr, planStr) {
     try {
       const fd = new FormData();
       fd.append('access_key', WEB3FORMS_KEY);
@@ -2344,10 +2296,7 @@
       fd.append('Chosen Day', dateStr);
       fd.append('Meeting Time', timeStr);
       fd.append('Date Plan', planStr);
-      if (noteStr) {
-        fd.append('Note from ayeshuu', noteStr);
-      }
-      fd.append('message', `Woohoo! ayeshuu locked the date plan! 🎉\n\n📅 Chosen Day: ${dateStr}\n⏰ Meeting Time: ${timeStr}\n🎯 Date Plan: ${planStr}${noteStr ? `\n\n💌 Note from ayeshuu: "${noteStr}"` : ''}\n\nCan't wait for your special date! 🤍✨`);
+      fd.append('message', `Woohoo! ayeshuu locked the date plan! 🎉\n\n📅 Chosen Day: ${dateStr}\n⏰ Meeting Time: ${timeStr}\n🎯 Date Plan: ${planStr}\n\nCan't wait for your special date! 🤍✨`);
 
       fetch('https://api.web3forms.com/submit', {
         method: 'POST',
