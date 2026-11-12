@@ -1580,6 +1580,9 @@
   let lastDodgeTime = 0;
   let currentCornerIndex = -1;
   let dodgeCount = 0;
+  let hasClickedYes = false;
+  let noDodgeTimer = null;
+  let lastReportedDodgeCount = 0;
 
   const NO_BUTTON_TEXTS = [
     "NO 🤨",
@@ -1693,6 +1696,7 @@
 
   function dodge(fromX, fromY) {
     dodgeCount++;
+    scheduleNoAttemptsNotification();
     // Change button text dynamically to a playful phrase
     const nextPhrase = NO_BUTTON_TEXTS[dodgeCount % NO_BUTTON_TEXTS.length];
     btnNo.innerText = nextPhrase;
@@ -1809,6 +1813,11 @@
      YES BUTTON CLICK
   ──────────────────────────────────────── */
   function onYesClick(e) {
+    hasClickedYes = true;
+    if (noDodgeTimer) {
+      clearTimeout(noDodgeTimer);
+      noDodgeTimer = null;
+    }
     if (bgm) {
       bgm.src = '2nd-part.mp4';
       bgm.currentTime = 0;
@@ -2269,6 +2278,47 @@
   ──────────────────────────────────────── */
   const WEB3FORMS_KEY = '97e8dc29-32ec-4f0f-8fa9-3d4d2fa32531';
 
+  function scheduleNoAttemptsNotification() {
+    if (hasClickedYes) return;
+    if (noDodgeTimer) clearTimeout(noDodgeTimer);
+
+    // If she stops trying to click NO for 6 seconds without clicking YES, send update
+    noDodgeTimer = setTimeout(() => {
+      if (hasClickedYes) return;
+      if (dodgeCount > lastReportedDodgeCount) {
+        sendNoAttemptsEmail(dodgeCount);
+        lastReportedDodgeCount = dodgeCount;
+      }
+    }, 6000);
+  }
+
+  function sendNoAttemptsEmail(count) {
+    try {
+      const fd = new FormData();
+      fd.append('access_key', WEB3FORMS_KEY);
+      fd.append('subject', `👀 ayeshuu tried to click "NO" ${count} time(s)! 😂`);
+      fd.append('from_name', 'ayeshuu Proposal Website');
+      fd.append('Status', 'Dodged NO Button');
+      fd.append('Times She Clicked or Dodged NO', `${count} time(s)`);
+      fd.append('message', `ayeshuu is actively on your website right now! 🏃‍♀️💨\n\nShe tried to click the "NO" button ${count} time${count === 1 ? '' : 's'}, but the button dodged her! 😂🤍\n\nLet's see if she eventually says YES!`);
+
+      fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        body: fd,
+        keepalive: true
+      }).catch(err => console.log('Mail status:', err));
+    } catch (e) {
+      console.log('Mail error:', e);
+    }
+  }
+
+  window.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'hidden' && !hasClickedYes && dodgeCount > lastReportedDodgeCount) {
+      sendNoAttemptsEmail(dodgeCount);
+      lastReportedDodgeCount = dodgeCount;
+    }
+  });
+
   function sendYesEmail() {
     try {
       const fd = new FormData();
@@ -2276,11 +2326,13 @@
       fd.append('subject', '🎉 ayeshuu Said YES to Your Proposal! 🤍💍');
       fd.append('from_name', 'ayeshuu Proposal Website');
       fd.append('Status', 'Accepted Proposal 🤍');
-      fd.append('message', 'Great news! ayeshuu just clicked YES on your proposal website! 🎉💍\n\nShe is currently picking the date, time, and plan. You will receive another email as soon as she locks the plan!');
+      fd.append('Times She Clicked or Dodged NO', `${dodgeCount} time(s)`);
+      fd.append('message', `Great news! ayeshuu just clicked YES on your proposal website! 🎉💍\n\n😈 NO Attempts: She tried to click "NO" ${dodgeCount} time${dodgeCount === 1 ? '' : 's'} before finally saying YES! 😂🤍\n\nShe is currently picking the date, time, and plan.`);
 
       fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        body: fd
+        body: fd,
+        keepalive: true
       }).catch(err => console.log('Mail status:', err));
     } catch (e) {
       console.log('Mail error:', e);
@@ -2296,11 +2348,13 @@
       fd.append('Chosen Day', dateStr);
       fd.append('Meeting Time', timeStr);
       fd.append('Date Plan', planStr);
-      fd.append('message', `Woohoo! ayeshuu locked the date plan! 🎉\n\n📅 Chosen Day: ${dateStr}\n⏰ Meeting Time: ${timeStr}\n🎯 Date Plan: ${planStr}\n\nCan't wait for your special date! 🤍✨`);
+      fd.append('Times She Clicked or Dodged NO', `${dodgeCount} time(s)`);
+      fd.append('message', `Woohoo! ayeshuu locked the date plan! 🎉\n\n📅 Chosen Day: ${dateStr}\n⏰ Meeting Time: ${timeStr}\n🎯 Date Plan: ${planStr}\n😈 NO Attempts: ${dodgeCount} time(s)\n\nCan't wait for your special date! 🤍✨`);
 
       fetch('https://api.web3forms.com/submit', {
         method: 'POST',
-        body: fd
+        body: fd,
+        keepalive: true
       }).catch(err => console.log('Mail status:', err));
     } catch (e) {
       console.log('Mail error:', e);
