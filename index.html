@@ -712,6 +712,11 @@
       border-color: #df538a;
       box-shadow: 0 0 0 3px rgba(223, 83, 138, 0.14);
     }
+    .custom-plan-input::placeholder {
+      color: #a09095;
+      font-weight: 400;
+      font-size: 0.92rem;
+    }
     @keyframes fadeInStage {
       from { opacity: 0; transform: scale(0.96) translateY(12px); }
       to { opacity: 1; transform: scale(1) translateY(0); }
@@ -1429,7 +1434,7 @@
 
         <div id="customPlanWrapper" class="custom-plan-wrapper" style="display: none;">
           <label class="custom-plan-label" for="customPlanInput">Your Plan ✍️</label>
-          <input type="text" id="customPlanInput" class="custom-plan-input" placeholder="Type your plan here..." maxlength="60" />
+          <input type="text" id="customPlanInput" class="custom-plan-input" placeholder="e.g. Street walk, Panipuri, Sunset date... 🤍" maxlength="60" />
         </div>
 
         <div id="activityAlertMsg" class="date-alert-msg"></div>
