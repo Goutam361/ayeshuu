@@ -1370,10 +1370,10 @@
             <div class="activity-check-box">✓</div>
           </div>
 
-          <div class="activity-option-item selected" onclick="selectActivity('Trip', this)">
+          <div class="activity-option-item selected" onclick="selectActivity('Similipal', this)">
             <span class="activity-opt-icon">🚗</span>
             <div class="activity-opt-info">
-              <span class="activity-opt-title">Trip</span>
+              <span class="activity-opt-title">Similipal</span>
             </div>
             <div class="activity-check-box">✓</div>
           </div>
@@ -1421,7 +1421,7 @@
             <span class="confirm-item-icon">✨</span>
             <div class="confirm-item-text">
               <span class="confirm-item-label">Date Plan</span>
-              <span class="confirm-item-val" id="confirmedActivityText">Trip 🚗</span>
+              <span class="confirm-item-val" id="confirmedActivityText">Similipal 🚗</span>
             </div>
           </div>
         </div>
@@ -2062,7 +2062,7 @@
   });
 
   /* Stage navigation & Date Type selection */
-  let selectedActivity = "Trip";
+  let selectedActivity = "Similipal";
 
   function selectActivity(activityName, el) {
     selectedActivity = activityName;
@@ -2141,7 +2141,7 @@
 
     if (alertEl) alertEl.textContent = '';
 
-    // Next step: Choose Date Plan (Movies, Trip, Dominos)
+    // Next step: Choose Date Plan (Movies, Similipal, Dominos)
     const s1 = document.getElementById('successStage1');
     const s2 = document.getElementById('successStage2');
     const sAct = document.getElementById('successStageActivity');
