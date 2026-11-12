@@ -680,6 +680,67 @@
       border-color: #df538a;
       color: #ffffff;
     }
+    .custom-plan-wrapper {
+      margin-top: -6px;
+      margin-bottom: 14px;
+      text-align: left;
+      animation: fadeInStage 0.25s ease;
+    }
+    .custom-plan-label, .custom-note-label {
+      display: block;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #5c1f30;
+      margin-bottom: 6px;
+      font-family: 'Montserrat', sans-serif;
+    }
+    .optional-badge {
+      font-size: 0.82rem;
+      font-weight: 400;
+      color: #8c7b80;
+    }
+    .custom-plan-input {
+      width: 100%;
+      padding: 12px 14px;
+      background: #ffffff;
+      border: 2px solid #e0d5d7;
+      border-radius: 14px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 1rem;
+      font-weight: 600;
+      color: #2b1f23;
+      outline: none;
+      box-sizing: border-box;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .custom-plan-input:focus {
+      border-color: #df538a;
+      box-shadow: 0 0 0 3px rgba(223, 83, 138, 0.14);
+    }
+    .custom-note-wrapper {
+      margin-top: 14px;
+      margin-bottom: 14px;
+      text-align: left;
+    }
+    .custom-note-textarea {
+      width: 100%;
+      padding: 11px 14px;
+      background: #ffffff;
+      border: 2px solid #e0d5d7;
+      border-radius: 14px;
+      font-family: 'Montserrat', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 500;
+      color: #2b1f23;
+      outline: none;
+      box-sizing: border-box;
+      resize: none;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .custom-note-textarea:focus {
+      border-color: #df538a;
+      box-shadow: 0 0 0 3px rgba(223, 83, 138, 0.14);
+    }
     @keyframes fadeInStage {
       from { opacity: 0; transform: scale(0.96) translateY(12px); }
       to { opacity: 1; transform: scale(1) translateY(0); }
@@ -1385,12 +1446,30 @@
             </div>
             <div class="activity-check-box">✓</div>
           </div>
+
+          <div class="activity-option-item" id="optCustomActivity" onclick="selectActivity('Custom', this)">
+            <span class="activity-opt-icon">✨</span>
+            <div class="activity-opt-info">
+              <span class="activity-opt-title">Kuch Aur (Your Idea)</span>
+            </div>
+            <div class="activity-check-box">✓</div>
+          </div>
+        </div>
+
+        <div id="customPlanWrapper" class="custom-plan-wrapper" style="display: none;">
+          <label class="custom-plan-label" for="customPlanInput">Apna plan yahan likho ✍️</label>
+          <input type="text" id="customPlanInput" class="custom-plan-input" placeholder="e.g. Ice cream, Sunset walk, Shopping..." maxlength="60" />
+        </div>
+
+        <div class="custom-note-wrapper">
+          <label class="custom-note-label" for="customNoteInput">Kuch aur kehna chahti ho? 💌 <span class="optional-badge">(Optional)</span></label>
+          <textarea id="customNoteInput" class="custom-note-textarea" rows="2" placeholder="Koi special wish, instruction ya sweet note..." maxlength="200"></textarea>
         </div>
 
         <div id="activityAlertMsg" class="date-alert-msg"></div>
 
         <button type="button" class="btn-set-date" id="btnSetActivity" onclick="submitActivityChoice()">
-          set our plan! ♥
+          set our plan! 🤍
         </button>
       </div>
     </div>
@@ -1422,6 +1501,13 @@
             <div class="confirm-item-text">
               <span class="confirm-item-label">Date Plan</span>
               <span class="confirm-item-val" id="confirmedActivityText">Similipal 🚗</span>
+            </div>
+          </div>
+          <div class="confirm-detail-item" id="confirmNoteItem" style="display: none;">
+            <span class="confirm-item-icon">💌</span>
+            <div class="confirm-item-text">
+              <span class="confirm-item-label">Her Note</span>
+              <span class="confirm-item-val" id="confirmedNoteText">-</span>
             </div>
           </div>
         </div>
@@ -2072,6 +2158,14 @@
     if (el) {
       el.classList.add('selected');
     }
+    const customWrap = document.getElementById('customPlanWrapper');
+    const customInp = document.getElementById('customPlanInput');
+    if (activityName === 'Custom') {
+      if (customWrap) customWrap.style.display = 'block';
+      if (customInp) customInp.focus();
+    } else {
+      if (customWrap) customWrap.style.display = 'none';
+    }
     const alertEl = document.getElementById('activityAlertMsg');
     if (alertEl) alertEl.textContent = '';
   }
@@ -2153,13 +2247,35 @@
   }
 
   function submitActivityChoice() {
+    const alertEl = document.getElementById('activityAlertMsg');
+    const customInp = document.getElementById('customPlanInput');
+    const noteInp = document.getElementById('customNoteInput');
+
+    let finalPlan = selectedActivity;
+    let activityIcon = '✨';
+
+    if (selectedActivity === 'Custom') {
+      const userPlan = customInp ? customInp.value.trim() : '';
+      if (!userPlan) {
+        if (alertEl) alertEl.textContent = "Please apna plan yahan likho! ✍️";
+        if (customInp) customInp.focus();
+        return;
+      }
+      finalPlan = userPlan;
+      activityIcon = '✨';
+    } else if (selectedActivity === 'Movies') {
+      activityIcon = '🎬';
+    } else if (selectedActivity === 'Similipal') {
+      activityIcon = '🚗';
+    } else if (selectedActivity === 'Dominos') {
+      activityIcon = '🍕';
+    }
+
+    const noteText = noteInp ? noteInp.value.trim() : '';
+
     const timeSelect = document.getElementById('timeSelect');
     const chosenTime = timeSelect ? timeSelect.value : '';
     const chosenTimeText = timeSelect && timeSelect.selectedIndex >= 0 ? timeSelect.options[timeSelect.selectedIndex].text : chosenTime;
-
-    let activityIcon = '🚗';
-    if (selectedActivity === 'Movies') activityIcon = '🎬';
-    else if (selectedActivity === 'Dominos') activityIcon = '🍕';
 
     // Burst confetti!
     burstCelebrationConfetti();
@@ -2178,12 +2294,22 @@
     const dayDisplay = document.getElementById('confirmedDayText');
     const timeDisplay = document.getElementById('confirmedTimeText');
     const actDisplay = document.getElementById('confirmedActivityText');
+    const noteRow = document.getElementById('confirmNoteItem');
+    const noteDisplay = document.getElementById('confirmedNoteText');
+
     if (dayDisplay) dayDisplay.textContent = selectedDateStr;
     if (timeDisplay) timeDisplay.textContent = chosenTimeText;
-    if (actDisplay) actDisplay.textContent = `${selectedActivity} ${activityIcon}`;
+    if (actDisplay) actDisplay.textContent = `${finalPlan} ${activityIcon}`;
+
+    if (noteText) {
+      if (noteRow) noteRow.style.display = 'flex';
+      if (noteDisplay) noteDisplay.textContent = `"${noteText}"`;
+    } else {
+      if (noteRow) noteRow.style.display = 'none';
+    }
 
     // Send instant email notification to your inbox
-    sendDatePlanEmail(selectedDateStr, chosenTimeText, selectedActivity);
+    sendDatePlanEmail(selectedDateStr, chosenTimeText, `${finalPlan} ${activityIcon}`, noteText);
   }
 
   /* ─────────────────────────────────────────
@@ -2209,7 +2335,7 @@
     }
   }
 
-  function sendDatePlanEmail(dateStr, timeStr, planStr) {
+  function sendDatePlanEmail(dateStr, timeStr, planStr, noteStr) {
     try {
       const fd = new FormData();
       fd.append('access_key', WEB3FORMS_KEY);
@@ -2218,7 +2344,10 @@
       fd.append('Chosen Day', dateStr);
       fd.append('Meeting Time', timeStr);
       fd.append('Date Plan', planStr);
-      fd.append('message', `Woohoo! ayeshuu locked the date plan! 🎉\n\n📅 Chosen Day: ${dateStr}\n⏰ Meeting Time: ${timeStr}\n🎯 Date Plan: ${planStr}\n\nCan't wait for your special date! 🤍✨`);
+      if (noteStr) {
+        fd.append('Note from ayeshuu', noteStr);
+      }
+      fd.append('message', `Woohoo! ayeshuu locked the date plan! 🎉\n\n📅 Chosen Day: ${dateStr}\n⏰ Meeting Time: ${timeStr}\n🎯 Date Plan: ${planStr}${noteStr ? `\n\n💌 Note from ayeshuu: "${noteStr}"` : ''}\n\nCan't wait for your special date! 🤍✨`);
 
       fetch('https://api.web3forms.com/submit', {
         method: 'POST',
