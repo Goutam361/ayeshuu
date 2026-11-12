@@ -1898,8 +1898,8 @@
 
     const year = 2026;
 
-    // Render strictly for the year 2026 (January to December 2026)
-    for (let month = 0; month <= 11; month++) {
+    // Render only November and December 2026
+    for (let month = 10; month <= 11; month++) {
       const monthSection = document.createElement('div');
       monthSection.className = 'cal-month-section';
       monthSection.id = `calMonth-${year}-${month}`;
