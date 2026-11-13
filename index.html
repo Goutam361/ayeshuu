@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -7,548 +7,452 @@
   <meta http-equiv="pragma" content="no-cache" />
   <meta http-equiv="expires" content="0" />
   <title>ayeshuu</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
+    :root {
+      --font-main: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      --bg-color: #fbf9f6;
+      --text-main: #181316;
+      --text-muted: #6e6468;
+      --card-bg: rgba(255, 255, 255, 0.88);
+      --card-border: rgba(255, 255, 255, 0.95);
+      --card-shadow: 0 30px 70px -15px rgba(90, 60, 75, 0.12), 0 1px 3px rgba(0, 0, 0, 0.02), inset 0 1.5px 2px rgba(255, 255, 255, 1);
+      --pill-btn-bg: #181316;
+      --pill-btn-hover: #292024;
+      --accent-pink: #df538a;
+    }
+
     body {
-      font-family: 'Montserrat', sans-serif;
-      background: radial-gradient(circle at 50% 50%, #0a0e1a 0%, #050508 100%);
+      font-family: var(--font-main);
+      background-color: var(--bg-color);
       min-height: 100vh;
-      overflow: hidden;
+      overflow-x: hidden;
+      overflow-y: auto;
       display: flex;
       align-items: center;
       justify-content: center;
       position: relative;
+      color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
     }
 
-    /* Floating hearts background (glowing SVG vectors) */
-    .hearts-bg {
+    /* Ambient Living Pastel Mesh Gradient Orbs (Dreamy Apple / Matcha Background) */
+    .ambient-mesh-bg {
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 0;
       overflow: hidden;
     }
+    .mesh-orb {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(95px);
+      opacity: 0.62;
+      animation: floatMeshOrb 20s ease-in-out infinite alternate;
+    }
+    .orb-1 {
+      width: 520px;
+      height: 520px;
+      background: radial-gradient(circle, #ffd4de 0%, rgba(255, 212, 222, 0) 70%);
+      top: -100px;
+      left: -80px;
+    }
+    .orb-2 {
+      width: 620px;
+      height: 620px;
+      background: radial-gradient(circle, #e6dcff 0%, rgba(230, 220, 255, 0) 70%);
+      bottom: -120px;
+      right: -100px;
+      animation-duration: 25s;
+      animation-delay: -5s;
+    }
+    .orb-3 {
+      width: 480px;
+      height: 480px;
+      background: radial-gradient(circle, #fff0c7 0%, rgba(255, 240, 199, 0) 70%);
+      top: 30%;
+      left: 40%;
+      animation-duration: 18s;
+      animation-delay: -9s;
+    }
+    @keyframes floatMeshOrb {
+      0% { transform: translate(0, 0) scale(1); }
+      50% { transform: translate(60px, 40px) scale(1.08); }
+      100% { transform: translate(-40px, -30px) scale(0.95); }
+    }
+
+    /* Floating White Hearts & Particles */
+    .hearts-bg {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
     .floating-heart {
       position: absolute;
       bottom: -60px;
       pointer-events: none;
-      animation: floatUp linear infinite;
+      animation: floatHeartUp linear infinite;
       transform-origin: center;
+      filter: drop-shadow(0 2px 8px rgba(180, 140, 160, 0.2));
     }
-    @keyframes floatUp {
+    @keyframes floatHeartUp {
       0%   { transform: translateY(0) rotate(0deg) scale(0.6); opacity: 0; }
       10%  { opacity: var(--op); }
       90%  { opacity: var(--op); }
       100% { transform: translateY(-115vh) rotate(360deg) scale(1.1); opacity: 0; }
     }
 
-    /* Aurora background particles */
     .particle {
       position: absolute;
       border-radius: 50%;
       pointer-events: none;
-      background: radial-gradient(circle, rgba(255, 105, 180, 0.15), transparent 70%);
-      animation: particleGlow 6s ease-in-out infinite;
+      background: radial-gradient(circle, rgba(255, 220, 235, 0.4), transparent 70%);
+      animation: particleGlow 7s ease-in-out infinite;
     }
     @keyframes particleGlow {
-      0%, 100% { transform: scale(1) translate(0, 0); opacity: 0.1; }
-      50%       { transform: scale(1.4) translate(20px, -20px); opacity: 0.25; }
+      0%, 100% { transform: scale(1) translate(0, 0); opacity: 0.15; }
+      50%       { transform: scale(1.4) translate(25px, -20px); opacity: 0.35; }
     }
 
     /* ─────────────────────────────────────────
-       3D REALISTIC LOVE LETTER ENVELOPE (Polished 1.5X)
+       FROSTED GLASS PROPOSAL CAPSULE & PEEKING CARDS (Image 1 Style)
     ──────────────────────────────────────── */
     .envelope-wrapper {
       position: relative;
       z-index: 10;
-      margin: 18vh auto 30px;
+      margin: 14vh auto 30px;
       display: flex;
       flex-direction: column;
       align-items: center;
-      perspective: 1500px;
-      transition: margin 0.6s cubic-bezier(0.16, 1, 0.3, 1), transform 0.3s ease;
+      perspective: 1200px;
+      transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
     }
     .envelope-wrapper.is-open {
-      margin: 28vh auto 30px;
+      margin: 12vh auto 30px;
     }
 
+    /* Peeking memo cards behind capsule (Exact match to Image 1) */
+    .peeking-cards-container {
+      position: absolute;
+      top: -34px;
+      width: 400px;
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      z-index: 1;
+      pointer-events: none;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .peek-card {
+      background: rgba(255, 255, 255, 0.94);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      border-radius: 14px 14px 6px 6px;
+      padding: 9px 16px 20px;
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #55484c;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.05);
+      transform-origin: bottom center;
+      transition: transform 0.3s ease;
+      letter-spacing: -0.01em;
+    }
+    .peek-card-1 { transform: rotate(-6deg) translateY(6px); }
+    .peek-card-2 { transform: rotate(1deg) translateY(0px); background: #ffffff; color: #181316; }
+    .peek-card-3 { transform: rotate(7deg) translateY(8px); }
+
+    .envelope-wrapper:hover .peek-card-1 { transform: rotate(-9deg) translateY(-2px); }
+    .envelope-wrapper:hover .peek-card-2 { transform: rotate(0deg) translateY(-7px); }
+    .envelope-wrapper:hover .peek-card-3 { transform: rotate(10deg) translateY(0px); }
+
+    .envelope-wrapper.is-open .peeking-cards-container {
+      opacity: 0;
+      transform: translateY(25px) scale(0.92);
+    }
+
+    /* The Liquid Frosted Glass Capsule */
     #envelope {
       position: relative;
       width: 440px;
-      height: 285px;
-      border-bottom-left-radius: 18px;
-      border-bottom-right-radius: 18px;
-      background-color: #d83a56;
-      box-shadow: 0 35px 95px rgba(0, 0, 0, 0.7), 0 0 65px rgba(255, 20, 147, 0.35);
+      min-height: 180px;
+      border-radius: 36px;
+      background: radial-gradient(circle at 50% -20%, rgba(255, 205, 222, 0.45), rgba(235, 225, 255, 0.3) 50%, transparent 80%), rgba(255, 255, 255, 0.78);
+      backdrop-filter: blur(36px) saturate(190%);
+      -webkit-backdrop-filter: blur(36px) saturate(190%);
+      border: 1.5px solid rgba(255, 255, 255, 0.95);
+      box-shadow: 0 30px 75px -15px rgba(90, 60, 75, 0.12),
+                  0 2px 6px rgba(0, 0, 0, 0.02),
+                  inset 0 1.5px 2px rgba(255, 255, 255, 1);
       cursor: pointer;
-      transition: transform 0.35s ease, box-shadow 0.35s ease;
+      transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+      z-index: 2;
+      overflow: hidden;
+      padding: 24px;
+      box-sizing: border-box;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     #envelope:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 45px 115px rgba(0, 0, 0, 0.8), 0 0 80px rgba(255, 20, 147, 0.5);
+      transform: translateY(-4px) scale(1.015);
+      box-shadow: 0 36px 85px -12px rgba(90, 60, 75, 0.16),
+                  inset 0 1.5px 2px rgba(255, 255, 255, 1);
     }
 
-    .front {
-      position: absolute;
-      width: 0;
-      height: 0;
-      z-index: 3;
-    }
-
-    /* Top triangular flap that folds DOWN when closed, UP when open */
-    .flap {
-      border-left: 220px solid transparent;
-      border-right: 220px solid transparent;
-      border-top: 162px solid #f25c7e;
-      transform-origin: top;
-      transition: transform 0.65s cubic-bezier(0.4, 0, 0.2, 1), z-index 0.2s 0.3s;
-      z-index: 5;
-      top: 0;
-      left: 0;
-      position: absolute;
-    }
-
-    /* Bottom pocket containing the letter */
-    .pocket {
-      border-left: 220px solid #ff758f;
-      border-right: 220px solid #ff758f;
-      border-bottom: 162px solid #ff597b;
-      border-top: 122px solid transparent;
-      border-bottom-left-radius: 18px;
-      border-bottom-right-radius: 18px;
-      z-index: 4;
-      bottom: 0;
-      left: 0;
-      position: absolute;
-      pointer-events: none;
-    }
-
-    /* The letter card tucked inside when closed, sliding out when open */
-    .letter {
-      position: absolute;
-      left: 18px;
-      right: 18px;
-      bottom: 10px;
-      height: 260px;
-      background: #ffffff;
-      border-radius: 18px;
-      z-index: 2;
-      opacity: 0;
-      transition: transform 0.75s cubic-bezier(0.16, 1, 0.3, 1) 0.25s, opacity 0.4s ease 0.25s, height 0.7s ease, z-index 0.1s ease 0.35s, box-shadow 0.4s ease;
-      padding: 30px 24px 24px;
-      text-align: center;
-      box-shadow: 0 6px 30px rgba(0, 0, 0, 0.14);
+    /* When closed: Capsule UI (Matching Image 1) */
+    .capsule-closed-view {
       display: flex;
-      flex-direction: column;
       align-items: center;
       justify-content: space-between;
-      color: #333;
-      pointer-events: none;
-    }
-
-    /* Heart wax seal on the tip of the flap */
-    .heart-seal {
-      position: absolute;
-      top: 105px;
-      left: 50%;
-      transform: translateX(-50%);
-      font-size: 3.4rem;
-      filter: drop-shadow(0 8px 22px rgba(255, 20, 147, 0.75));
-      animation: sealPulse 2s ease-in-out infinite;
-      z-index: 6;
+      width: 100%;
+      gap: 16px;
       transition: opacity 0.3s ease, transform 0.3s ease;
-      pointer-events: none;
       user-select: none;
     }
-    @keyframes sealPulse {
-      0%, 100% { transform: translateX(-50%) scale(1); }
-      50%       { transform: translateX(-50%) scale(1.15); }
-    }
-
-    /* Letter interior typography */
-    .letter-header {
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
+    .capsule-icon-circle {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: #ffffff;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06), inset 0 1px 1px rgba(255, 255, 255, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: 1.8rem;
-      color: #c9184a;
+      flex-shrink: 0;
+      border: 1px solid rgba(0, 0, 0, 0.03);
+    }
+    .capsule-text-info {
+      flex: 1;
+      text-align: left;
+    }
+    .capsule-badge {
+      display: inline-block;
+      font-size: 0.72rem;
       font-weight: 700;
-      margin-top: 2px;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #9c8a90;
+      margin-bottom: 2px;
+    }
+    .capsule-title {
+      font-size: 1.28rem;
+      font-weight: 700;
+      color: #181316;
+      letter-spacing: -0.02em;
+      margin-bottom: 3px;
+    }
+    .capsule-sub {
+      font-size: 0.88rem;
+      color: #72676b;
+      font-weight: 500;
+    }
+    .capsule-arrow-btn {
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      background: rgba(0, 0, 0, 0.04);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #4b4044;
+      flex-shrink: 0;
+      transition: transform 0.2s, background 0.2s;
+    }
+    #envelope:hover .capsule-arrow-btn {
+      background: rgba(0, 0, 0, 0.08);
+      transform: translateX(3px);
     }
 
+    /* Open State: Envelope Expands into Proposal Card */
+    #envelope.open {
+      min-height: 290px;
+      padding: 34px 28px;
+      cursor: default;
+      transform: translateY(-8px);
+      background: radial-gradient(circle at 50% -20%, rgba(255, 195, 215, 0.5), rgba(235, 220, 255, 0.32) 50%, transparent 80%), rgba(255, 255, 255, 0.94);
+      box-shadow: 0 40px 95px -10px rgba(90, 60, 75, 0.18),
+                  inset 0 2px 3px rgba(255, 255, 255, 1);
+    }
+    #envelope.open:hover {
+      transform: translateY(-8px);
+    }
+    #envelope.open .capsule-closed-view {
+      display: none;
+    }
+
+    /* Letter inside envelope */
+    .letter {
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      width: 100%;
+      animation: letterFadeIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+    #envelope.open .letter {
+      display: flex;
+    }
+    @keyframes letterFadeIn {
+      from { opacity: 0; transform: translateY(16px) scale(0.96); }
+      to   { opacity: 1; transform: translateY(0) scale(1); }
+    }
+    .letter-top-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 6px 14px;
+      border-radius: 9999px;
+      background: rgba(0, 0, 0, 0.04);
+      font-size: 0.74rem;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      color: #7a6e72;
+      margin-bottom: 12px;
+    }
+    .letter-header {
+      display: none;
+    }
     .letter-message {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.85rem;
-      font-style: italic;
-      font-weight: 700;
-      color: #1a1a1a;
-      line-height: 1.35;
-      margin: 10px 0;
-    }
-
-    .letter-sub {
-      font-size: 1.15rem;
-      color: #888;
-      font-family: 'Montserrat', sans-serif;
+      font-size: clamp(1.75rem, 5vw, 2.15rem);
+      font-weight: 800;
+      color: #181316;
+      letter-spacing: -0.03em;
+      line-height: 1.25;
       margin-bottom: 6px;
     }
-
-    /* Envelope Open State */
-    #envelope.open .flap {
-      transform: rotateX(180deg);
-      z-index: 1;
-    }
-
-    #envelope.open .heart-seal {
-      opacity: 0;
-      transform: translateX(-50%) scale(0);
-    }
-
-    #envelope.open .letter {
-      transform: translateY(-220px);
-      height: 345px;
-      opacity: 1;
-      z-index: 6;
-      pointer-events: all;
-      box-shadow: 0 35px 85px rgba(0, 0, 0, 0.55), 0 0 55px rgba(255, 105, 180, 0.45);
-    }
-
-    /* Tap Hint Badge */
-    .tap-hint {
-      margin-top: 36px;
-      color: rgba(255, 182, 193, 0.88);
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1.35rem;
+    .letter-sub {
+      font-size: 0.96rem;
+      color: #72676b;
       font-weight: 500;
-      letter-spacing: 2px;
-      animation: hintFloat 2s ease-in-out infinite;
-      transition: opacity 0.4s ease;
-      user-select: none;
-      pointer-events: none;
-    }
-    @keyframes hintFloat {
-      0%, 100% { transform: translateY(0); opacity: 0.88; }
-      50%       { transform: translateY(-6px); opacity: 1; }
-    }
-    #envelope.open + .tap-hint {
-      opacity: 0;
+      margin-bottom: 8px;
     }
 
-    /* Inside-letter YES & NO buttons - Perfectly Symmetrical & Matching Dimensions */
+    /* Buttons inside the letter (Matcha Pill Buttons Style) */
     .buttons {
       display: flex;
-      gap: 16px;
+      gap: 14px;
       justify-content: center;
       align-items: center;
       width: 100%;
-      margin-top: 6px;
+      margin-top: 18px;
     }
-
-    .btn-yes, .btn-no {
+    .btn-yes {
       height: 52px;
-      padding: 0 32px;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1.25rem;
+      padding: 0 36px;
+      border-radius: 9999px;
+      background: #181316;
+      color: #ffffff;
+      font-family: var(--font-main);
+      font-size: 1.05rem;
       font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 1.2px;
-      border-radius: 60px;
+      letter-spacing: -0.01em;
+      border: none;
       cursor: pointer;
+      box-shadow: 0 10px 24px rgba(24, 19, 22, 0.22);
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
       display: inline-flex;
       align-items: center;
       justify-content: center;
       gap: 8px;
       white-space: nowrap;
-      box-sizing: border-box;
-      user-select: none;
-      -webkit-user-select: none;
-      line-height: 1;
-    }
-
-    .btn-yes {
-      border: 2px solid transparent;
-      background: linear-gradient(135deg, #ff4e8a, #ff1a6b);
-      color: #fff;
-      box-shadow: 0 8px 26px rgba(255, 26, 107, 0.45);
-      transition: transform 0.2s, box-shadow 0.2s;
     }
     .btn-yes:hover {
-      transform: scale(1.06);
-      box-shadow: 0 14px 36px rgba(255, 26, 107, 0.65);
+      transform: translateY(-2px) scale(1.04);
+      box-shadow: 0 14px 32px rgba(24, 19, 22, 0.3);
+      background: #272024;
+    }
+    .btn-yes:active {
+      transform: translateY(1px) scale(0.98);
     }
 
     .btn-no {
-      border: 2px solid #e63946;
-      background: #e63946;
-      color: #ffffff;
+      height: 52px;
+      padding: 0 30px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.92);
+      color: #382e32;
+      border: 1.5px solid rgba(0, 0, 0, 0.08);
+      font-family: var(--font-main);
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
+      transition: background 0.2s, box-shadow 0.2s;
+      user-select: none;
+      white-space: nowrap;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
       z-index: 100;
-      touch-action: manipulation;
-      transition: background 0.3s, border-color 0.3s, transform 0.2s;
-      box-shadow: 0 8px 26px rgba(230, 57, 70, 0.4);
     }
     .btn-no:hover {
-      background: #d62839;
-      border-color: #d62839;
-      box-shadow: 0 16px 45px rgba(230, 57, 70, 0.65);
-    }
-    @keyframes noJiggleShake {
-      0%   { transform: scale(1) rotate(0deg); }
-      15%  { transform: scale(1.18) rotate(-14deg); }
-      30%  { transform: scale(1.18) rotate(14deg); }
-      45%  { transform: scale(1.12) rotate(-10deg); }
-      60%  { transform: scale(1.12) rotate(10deg); }
-      75%  { transform: scale(1.05) rotate(-5deg); }
-      100% { transform: scale(1) rotate(0deg); }
-    }
-    .btn-no.jiggling {
-      animation: noJiggleShake 0.38s ease-in-out !important;
+      background: #ffffff;
+      border-color: rgba(0, 0, 0, 0.15);
     }
 
-    /* Success overlay styling (gorgeous dark overlay) */
+    /* Tap Hint Badge */
+    .tap-hint {
+      margin-top: 22px;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 18px;
+      border-radius: 9999px;
+      background: rgba(255, 255, 255, 0.72);
+      backdrop-filter: blur(16px);
+      border: 1px solid rgba(255, 255, 255, 0.9);
+      color: #6e6367;
+      font-family: var(--font-main);
+      font-size: 0.9rem;
+      font-weight: 600;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.03);
+      animation: hintFloat 2.5s ease-in-out infinite;
+      transition: opacity 0.3s ease;
+      user-select: none;
+      pointer-events: none;
+    }
+    @keyframes hintFloat {
+      0%, 100% { transform: translateY(0); opacity: 0.9; }
+      50%       { transform: translateY(-5px); opacity: 1; }
+    }
+    .envelope-wrapper.is-open .tap-hint {
+      opacity: 0;
+    }
+
+    /* ─────────────────────────────────────────
+       SUCCESS OVERLAY & MATCHA-STYLE MODAL CARDS (Images 2 & 3)
+    ──────────────────────────────────────── */
     .success-overlay {
       position: fixed;
       inset: 0;
-      z-index: 200;
-      display: flex;
-      flex-direction: column;
+      background: rgba(251, 249, 246, 0.78);
+      backdrop-filter: blur(28px) saturate(180%);
+      -webkit-backdrop-filter: blur(28px) saturate(180%);
+      display: none;
       align-items: center;
-      justify-content: flex-start;
-      background: radial-gradient(circle at 50% 50%, #170213 0%, #050005 100%);
+      justify-content: center;
+      z-index: 1000;
       opacity: 0;
-      pointer-events: none;
-      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-      padding: 24px 16px;
+      transition: opacity 0.35s ease;
+      padding: 20px 16px;
       overflow-y: auto;
-      -webkit-overflow-scrolling: touch;
       box-sizing: border-box;
     }
     .success-overlay.visible {
-      opacity: 1;
-      pointer-events: all;
-    }
-
-    /* Elegant framed wrapper for the GIF */
-    .success-gif-wrapper {
-      position: relative;
-      border-radius: 28px;
-      overflow: hidden;
-      border: 1.5px solid rgba(255, 255, 255, 0.15);
-      box-shadow: 0 15px 60px rgba(255, 20, 147, 0.45), 0 0 90px rgba(0, 0, 0, 0.85);
-      transform: scale(0.4) rotate(-6deg);
-      opacity: 0;
-      transition: transform 1.1s cubic-bezier(0.16, 1, 0.3, 1) 0.1s, opacity 0.8s ease 0.1s;
-      max-width: min(260px, 60vw);
-    }
-    .success-overlay.visible .success-gif-wrapper {
-      transform: scale(1) rotate(0deg);
-      opacity: 1;
-    }
-    .success-gif-wrapper img {
-      width: 100%;
-      max-height: 28vh;
-      object-fit: contain;
-      display: block;
-      border-radius: 28px;
-    }
-
-    /* Elegant playfair italic success msg */
-    .success-message {
-      margin-top: 18px;
-      font-family: 'Playfair Display', serif;
-      font-style: italic;
-      font-weight: 600;
-      font-size: clamp(1.75rem, 5.5vw, 2.6rem);
-      color: #fff;
-      text-shadow: 0 4px 20px rgba(255, 105, 180, 0.6);
-      opacity: 0;
-      transform: translateY(15px);
-      transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.5s, transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.5s;
-      text-align: center;
-    }
-    .success-overlay.visible .success-message {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .success-sub {
-      margin-top: 10px;
-      font-size: clamp(1rem, 3.2vw, 1.25rem);
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 400;
-      color: rgba(255, 218, 224, 0.9);
-      opacity: 0;
-      transform: translateY(12px);
-      transition: opacity 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.7s, transform 0.9s cubic-bezier(0.16, 1, 0.3, 1) 0.7s;
-      text-align: center;
-      max-width: 600px;
-      line-height: 1.45;
-    }
-    .success-overlay.visible .success-sub {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* Row of pulsing custom SVG hearts */
-    .success-hearts {
-      margin-top: 16px;
       display: flex;
-      gap: 14px;
-      justify-content: center;
-      opacity: 0;
-      transition: opacity 0.9s ease 0.9s;
-    }
-    .success-overlay.visible .success-hearts {
       opacity: 1;
     }
-    .success-heart-icon {
-      width: 26px;
-      height: 26px;
-      color: #ffffff;
-      animation: successHeartBeat 1.4s ease-in-out infinite;
-    }
-    .success-heart-icon:nth-child(2) { animation-delay: 0.2s; }
-    .success-heart-icon:nth-child(3) { animation-delay: 0.4s; color: #ffffff; }
-    .success-heart-icon:nth-child(4) { animation-delay: 0.6s; }
-    .success-heart-icon:nth-child(5) { animation-delay: 0.8s; }
 
-    @keyframes successHeartBeat {
-      0%, 100% { transform: scale(1); }
-      30%       { transform: scale(1.3); }
-      60%       { transform: scale(1); }
-    }
-
-    .ripple-burst {
-      position: fixed;
-      border-radius: 50%;
-      background: radial-gradient(circle, rgba(255,105,180,0.6), transparent);
-      pointer-events: none;
-      transform: scale(0);
-      animation: rippleBurst 0.8s ease-out forwards;
-      z-index: 150;
-    }
-    @keyframes rippleBurst {
-      to { transform: scale(20); opacity: 0; }
-    }
-
-    .confetti-heart {
-      position: fixed;
-      pointer-events: none;
-      z-index: 160;
-      animation: confettiFly 1.2s ease-out forwards;
-    }
-    @keyframes confettiFly {
-      0%   { transform: translate(0,0) rotate(0deg) scale(1); opacity: 1; }
-      100% { transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(0.3); opacity: 0; }
-    }
-
-    @media (max-width: 600px) {
-      .envelope-wrapper {
-        margin: 18vh auto 20px;
-      }
-      .envelope-wrapper.is-open {
-        margin: 27vh auto 20px;
-      }
-      #envelope {
-        width: 320px;
-        height: 210px;
-        border-bottom-left-radius: 14px;
-        border-bottom-right-radius: 14px;
-      }
-      .flap {
-        border-left: 160px solid transparent;
-        border-right: 160px solid transparent;
-        border-top: 118px solid #f25c7e;
-      }
-      .pocket {
-        border-left: 160px solid #ff758f;
-        border-right: 160px solid #ff758f;
-        border-bottom: 118px solid #ff597b;
-        border-top: 88px solid transparent;
-        border-bottom-left-radius: 14px;
-        border-bottom-right-radius: 14px;
-      }
-      .heart-seal {
-        top: 76px;
-        font-size: 2.7rem;
-      }
-      .letter {
-        left: 12px;
-        right: 12px;
-        bottom: 8px;
-        height: 190px;
-        border-radius: 14px;
-        padding: 18px 14px 14px;
-      }
-      #envelope.open .letter {
-        transform: translateY(-165px);
-        height: 265px;
-        box-shadow: 0 25px 65px rgba(0, 0, 0, 0.5), 0 0 45px rgba(255, 105, 180, 0.4);
-      }
-      .letter-header {
-        font-size: 1.32rem;
-      }
-      .letter-message {
-        font-size: 1.32rem;
-        margin: 6px 0;
-      }
-      .letter-sub {
-        font-size: 0.92rem;
-        margin-bottom: 4px;
-      }
-      .tap-hint {
-        margin-top: 20px;
-        font-size: 1.05rem;
-        letter-spacing: 1px;
-      }
-      .buttons {
-        gap: 12px;
-        margin-top: 2px;
-      }
-      .btn-yes, .btn-no {
-        padding: 10px 22px;
-        font-size: 1.05rem;
-        letter-spacing: 0.8px;
-      }
-      .card {
-        padding: 36px 20px 30px;
-        border-radius: 28px;
-      }
-    }
-
-    /* Floating Music Toggle */
-    .music-toggle {
-      position: fixed;
-      top: 30px;
-      right: 30px;
-      width: 69px;
-      height: 69px;
-      background: rgba(255, 255, 255, 0.08);
-      border: 1.5px solid rgba(255, 255, 255, 0.16);
-      border-radius: 50%;
-      cursor: pointer;
-      z-index: 1000;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: rgba(255, 255, 255, 0.85);
-      backdrop-filter: blur(12px);
-      -webkit-backdrop-filter: blur(12px);
-      box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
-      transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    .music-toggle:hover {
-      background: rgba(255, 255, 255, 0.16);
-      color: #ffffff;
-      transform: scale(1.08);
-      box-shadow: 0 16px 42px rgba(255, 20, 147, 0.3);
-    }
-    .music-toggle svg {
-      width: 33px;
-      height: 33px;
-    }
-
-    /* Stage containers inside success overlay */
+    /* Stage visibility: only one at a time */
     #successStage1 {
       display: flex;
       flex-direction: column;
@@ -557,7 +461,6 @@
       width: 100%;
       max-width: 440px;
       margin: auto;
-      animation: fadeInStage 0.5s ease;
     }
     #successStage2 {
       display: none;
@@ -567,7 +470,6 @@
       width: 100%;
       max-width: 440px;
       margin: auto;
-      animation: fadeInStage 0.4s ease;
     }
     #successStageActivity {
       display: none;
@@ -577,7 +479,6 @@
       width: 100%;
       max-width: 440px;
       margin: auto;
-      animation: fadeInStage 0.4s ease;
     }
     #successStage3 {
       display: none;
@@ -587,37 +488,333 @@
       width: 100%;
       max-width: 440px;
       margin: auto;
-      animation: fadeInStage 0.4s ease;
     }
-    .activity-card {
+
+    #successStage1, .date-card, .activity-card, .confirmed-card {
       position: relative;
-      background: #f7f9f6;
-      color: #382a2e;
-      border-radius: 28px;
-      padding: 24px 18px 20px;
-      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.12);
       width: 100%;
-      max-width: 420px;
+      max-width: 440px;
+      background: radial-gradient(circle at 50% -15%, rgba(255, 190, 210, 0.45), rgba(230, 215, 255, 0.3) 45%, transparent 75%), rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(36px);
+      -webkit-backdrop-filter: blur(36px);
+      border: 1.5px solid rgba(255, 255, 255, 0.95);
+      border-radius: 32px;
+      box-shadow: 0 30px 80px -10px rgba(80, 50, 65, 0.12),
+                  0 2px 6px rgba(0, 0, 0, 0.02),
+                  inset 0 1.5px 2px rgba(255, 255, 255, 1);
+      padding: 34px 28px;
       text-align: center;
       box-sizing: border-box;
+      margin: auto;
+      animation: modalPopIn 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards;
     }
-    .activity-badge-row {
-      font-size: 2.2rem;
-      margin-bottom: 2px;
+    @keyframes modalPopIn {
+      from { opacity: 0; transform: scale(0.94) translateY(14px); }
+      to   { opacity: 1; transform: scale(1) translateY(0); }
     }
-    .activity-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.65rem;
+
+    /* Circular Status Badge (Matcha Icon Style - Image 2) */
+    .matcha-status-badge {
+      width: 60px;
+      height: 60px;
+      margin: 0 auto 16px;
+      border-radius: 50%;
+      background: #ffffff;
+      border: 1px solid rgba(0, 0, 0, 0.04);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06), inset 0 1px 1px rgba(255, 255, 255, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.85rem;
+    }
+
+    /* Modal Titles & Subtitles */
+    .modal-title, .date-title, .activity-title, .confirmed-title {
+      font-family: var(--font-main);
+      font-size: 1.55rem;
       font-weight: 700;
-      color: #5c1f30;
-      margin-bottom: 3px;
+      color: #181316;
+      letter-spacing: -0.025em;
+      margin-bottom: 6px;
     }
-    .activity-sub {
-      font-size: 0.95rem;
-      color: #8c4c5c;
-      margin-bottom: 14px;
+    .modal-sub, .date-sub, .activity-sub, .confirmed-sub {
+      font-family: var(--font-main);
+      font-size: 0.94rem;
+      color: #6e6468;
       font-weight: 500;
+      margin-bottom: 22px;
+      line-height: 1.45;
     }
+
+    /* Framed Cat GIF in Stage 1 */
+    .success-gif-wrapper {
+      position: relative;
+      border-radius: 24px;
+      overflow: hidden;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+      max-width: 240px;
+      margin: 0 auto 20px;
+    }
+    .success-gif-wrapper img {
+      width: 100%;
+      max-height: 24vh;
+      object-fit: cover;
+      display: block;
+    }
+
+    /* Back Button in Top Nav */
+    .card-top-nav {
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin-bottom: 8px;
+      width: 100%;
+    }
+    .card-back-btn {
+      background: rgba(0, 0, 0, 0.04);
+      border: 1px solid rgba(0, 0, 0, 0.05);
+      border-radius: 9999px;
+      padding: 7px 16px;
+      font-family: var(--font-main);
+      font-size: 0.86rem;
+      font-weight: 600;
+      color: #52474b;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+    }
+    .card-back-btn:hover {
+      background: rgba(0, 0, 0, 0.08);
+      color: #181316;
+    }
+
+    /* Next / Action Pill Buttons (Matcha Style) */
+    .btn-next-step, .btn-set-date {
+      width: 100%;
+      height: 52px;
+      border-radius: 9999px;
+      background: #181316;
+      color: #ffffff;
+      font-family: var(--font-main);
+      font-size: 1.02rem;
+      font-weight: 700;
+      letter-spacing: -0.01em;
+      border: none;
+      cursor: pointer;
+      margin-top: 18px;
+      box-shadow: 0 10px 24px rgba(24, 19, 22, 0.18);
+      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+    .btn-next-step:hover, .btn-set-date:hover {
+      background: #272024;
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px rgba(24, 19, 22, 0.24);
+    }
+    .btn-next-step:active, .btn-set-date:active {
+      transform: translateY(1px);
+    }
+
+    /* Date & Time Picker Controls */
+    .date-form-group {
+      margin-bottom: 16px;
+      text-align: left;
+      position: relative;
+    }
+    .date-form-label {
+      display: block;
+      font-family: var(--font-main);
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #3b3236;
+      margin-bottom: 8px;
+    }
+    .date-input-wrapper {
+      position: relative;
+      display: flex;
+      align-items: center;
+      background: #ffffff;
+      border: 1.5px solid #e7dfe2;
+      border-radius: 16px;
+      padding: 0 14px;
+      transition: all 0.2s ease;
+      cursor: pointer;
+    }
+    .date-input-wrapper:focus-within, .date-input-wrapper:hover, .date-input-wrapper.active {
+      border-color: #181316;
+      box-shadow: 0 0 0 3px rgba(24, 19, 22, 0.08);
+    }
+    .date-input-wrapper input {
+      width: 100%;
+      height: 48px;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-family: var(--font-main);
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: #181316;
+      cursor: pointer;
+    }
+    .cal-toggle-icon {
+      font-size: 1.15rem;
+      opacity: 0.7;
+    }
+
+    .time-select-wrapper {
+      position: relative;
+      background: #ffffff;
+      border: 1.5px solid #e7dfe2;
+      border-radius: 16px;
+      overflow: hidden;
+      transition: all 0.2s ease;
+    }
+    .time-select-wrapper:focus-within, .time-select-wrapper:hover {
+      border-color: #181316;
+      box-shadow: 0 0 0 3px rgba(24, 19, 22, 0.08);
+    }
+    .time-select-wrapper select {
+      width: 100%;
+      height: 48px;
+      padding: 0 36px 0 14px;
+      background: transparent;
+      border: none;
+      outline: none;
+      font-family: var(--font-main);
+      font-size: 0.98rem;
+      font-weight: 600;
+      color: #181316;
+      cursor: pointer;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+    .time-select-wrapper::after {
+      content: '▾';
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 15px;
+      color: #8c7e84;
+      pointer-events: none;
+    }
+
+    /* Modern Frosted Calendar Popup */
+    .calendar-popup {
+      position: absolute;
+      top: calc(100% + 8px);
+      left: 0;
+      right: 0;
+      background: rgba(255, 255, 255, 0.98);
+      backdrop-filter: blur(24px);
+      border: 1.5px solid #e7dfe2;
+      border-radius: 24px;
+      box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
+      z-index: 50;
+      display: none;
+      flex-direction: column;
+      padding: 16px;
+    }
+    .calendar-popup.open {
+      display: flex;
+      animation: modalPopIn 0.2s ease forwards;
+    }
+    .cal-weekday-row {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      text-align: center;
+      font-size: 0.82rem;
+      font-weight: 700;
+      color: #8c8286;
+      padding-bottom: 10px;
+      border-bottom: 1px solid #f0e9eb;
+      margin-bottom: 8px;
+    }
+    .cal-scroll-body {
+      max-height: 240px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+    .cal-month-section {
+      margin-bottom: 14px;
+    }
+    .cal-month-divider {
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #181316;
+      margin: 8px 0 6px 4px;
+      text-align: left;
+    }
+    .cal-month-days-grid {
+      display: grid;
+      grid-template-columns: repeat(7, 1fr);
+      gap: 4px;
+      text-align: center;
+    }
+    .cal-day-cell {
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.88rem;
+      font-weight: 600;
+      border-radius: 10px;
+      cursor: default;
+      color: #bdc1c6;
+    }
+    .cal-day-cell.available {
+      color: #181316;
+      background: #f7f2f4;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      font-weight: 700;
+    }
+    .cal-day-cell.available:hover {
+      background: #df538a;
+      color: #ffffff;
+      transform: scale(1.08);
+    }
+    .cal-day-cell.selected {
+      background: #181316 !important;
+      color: #ffffff !important;
+      font-weight: 700;
+    }
+    .cal-footer-row {
+      display: flex;
+      justify-content: space-between;
+      padding-top: 10px;
+      margin-top: 6px;
+      border-top: 1px solid #f0e9eb;
+    }
+    .cal-footer-btn {
+      background: none;
+      border: none;
+      font-family: var(--font-main);
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #6e6468;
+      cursor: pointer;
+    }
+    .cal-footer-btn:hover {
+      color: #181316;
+    }
+
+    .date-alert-msg {
+      font-size: 0.92rem;
+      color: #c5294e;
+      font-weight: 600;
+      min-height: 20px;
+      margin: 4px 0;
+      text-align: center;
+    }
+
+    /* Activity Options List (Matcha Transaction Item Style - Image 2) */
     .activity-options-list {
       display: flex;
       flex-direction: column;
@@ -627,677 +824,311 @@
     .activity-option-item {
       display: flex;
       align-items: center;
-      gap: 14px;
-      padding: 14px 16px;
+      justify-content: space-between;
+      padding: 14px 18px;
       background: #ffffff;
-      border: 2px solid #e0d5d7;
-      border-radius: 16px;
+      border: 1.5px solid #ece5e7;
+      border-radius: 20px;
       cursor: pointer;
-      user-select: none;
-      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      transition: all 0.2s ease;
       text-align: left;
     }
     .activity-option-item:hover {
-      border-color: #df538a;
-      background: #fff8fa;
-      transform: translateY(-2px);
-      box-shadow: 0 6px 18px rgba(223, 83, 138, 0.18);
+      border-color: #beb2b6;
+      transform: translateY(-1px);
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.04);
     }
     .activity-option-item.selected {
-      border-color: #df538a;
-      background: #fff0f5;
-      transform: scale(1.01);
-      box-shadow: 0 8px 22px rgba(223, 83, 138, 0.25);
+      background: #faf8f9;
+      border-color: #181316;
+      box-shadow: 0 0 0 2px #181316, 0 8px 24px rgba(0, 0, 0, 0.06);
     }
     .activity-opt-icon {
-      font-size: 2rem;
-      width: 40px;
-      text-align: center;
+      font-size: 1.6rem;
+      margin-right: 12px;
+      display: flex;
+      align-items: center;
     }
     .activity-opt-info {
       flex: 1;
     }
     .activity-opt-title {
-      font-size: 1.18rem;
+      font-family: var(--font-main);
+      font-size: 1rem;
       font-weight: 700;
-      color: #2b1f23;
-      display: block;
+      color: #181316;
     }
     .activity-check-box {
       width: 26px;
       height: 26px;
-      border: 2.5px solid #d4c4c7;
       border-radius: 50%;
+      border: 1.5px solid #d5cbce;
       display: flex;
       align-items: center;
       justify-content: center;
-      font-size: 14px;
+      font-size: 0.85rem;
+      font-weight: 700;
       color: transparent;
-      transition: all 0.2s;
+      transition: all 0.2s ease;
     }
     .activity-option-item.selected .activity-check-box {
-      background: #df538a;
-      border-color: #df538a;
+      background: #181316;
+      border-color: #181316;
       color: #ffffff;
     }
+
+    /* Custom Plan Input Box */
     .custom-plan-wrapper {
       margin-top: -6px;
       margin-bottom: 14px;
       text-align: left;
-      animation: fadeInStage 0.25s ease;
+      animation: modalPopIn 0.25s ease;
     }
     .custom-plan-label {
       display: block;
-      font-size: 0.95rem;
-      font-weight: 600;
-      color: #5c1f30;
+      font-size: 0.88rem;
+      font-weight: 700;
+      color: #3b3236;
       margin-bottom: 6px;
-      font-family: 'Montserrat', sans-serif;
+      font-family: var(--font-main);
     }
     .custom-plan-input {
       width: 100%;
-      padding: 12px 14px;
+      height: 48px;
+      padding: 0 16px;
       background: #ffffff;
-      border: 2px solid #e0d5d7;
-      border-radius: 14px;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1rem;
+      border: 1.5px solid #e7dfe2;
+      border-radius: 16px;
+      font-family: var(--font-main);
+      font-size: 0.96rem;
       font-weight: 600;
-      color: #2b1f23;
+      color: #181316;
       outline: none;
       box-sizing: border-box;
       transition: border-color 0.2s, box-shadow 0.2s;
     }
     .custom-plan-input:focus {
-      border-color: #df538a;
-      box-shadow: 0 0 0 3px rgba(223, 83, 138, 0.14);
+      border-color: #181316;
+      box-shadow: 0 0 0 3px rgba(24, 19, 22, 0.08);
     }
     .custom-plan-input::placeholder {
       color: #a09095;
       font-weight: 400;
-      font-size: 0.92rem;
-    }
-    @keyframes fadeInStage {
-      from { opacity: 0; transform: scale(0.96) translateY(12px); }
-      to { opacity: 1; transform: scale(1) translateY(0); }
+      font-size: 0.9rem;
     }
 
-    /* Button on stage 1 to proceed to date chooser */
-    .btn-next-step {
-      margin-top: 18px;
-      padding: 14px 34px;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1.18rem;
-      font-weight: 600;
-      border: none;
-      border-radius: 40px;
-      cursor: pointer;
-      background: linear-gradient(135deg, #ff4e8a, #ff1a6b);
-      color: #fff;
-      box-shadow: 0 10px 30px rgba(255, 26, 107, 0.5);
-      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s;
-      animation: pulseNext 2s infinite ease-in-out;
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .btn-next-step:hover {
-      transform: scale(1.05) translateY(-2px);
-      box-shadow: 0 14px 38px rgba(255, 26, 107, 0.7);
-    }
-    @keyframes pulseNext {
-      0%, 100% { transform: scale(1); box-shadow: 0 8px 24px rgba(255, 26, 107, 0.45); }
-      50% { transform: scale(1.03); box-shadow: 0 12px 32px rgba(255, 26, 107, 0.7); }
-    }
-
-    /* Date Chooser Card (Matching User's Reference Image) */
-    .date-card {
-      position: relative;
-      background: #f7f9f6;
-      color: #382a2e;
-      border-radius: 28px;
-      padding: 24px 18px 20px;
-      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.7), 0 0 0 1px rgba(255, 255, 255, 0.12);
-      width: 100%;
-      max-width: 420px;
-      text-align: center;
-      box-sizing: border-box;
-    }
-
-    .card-top-nav {
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      width: 100%;
-      margin-bottom: 6px;
-    }
-
-    .card-back-btn {
-      border: none;
-      background: rgba(140, 54, 77, 0.08);
-      color: #8c364d;
-      font-size: 0.92rem;
-      font-weight: 600;
-      cursor: pointer;
-      font-family: 'Montserrat', sans-serif;
-      padding: 5px 12px;
-      border-radius: 20px;
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      transition: background 0.2s, transform 0.15s;
-    }
-    .card-back-btn:hover {
-      background: rgba(140, 54, 77, 0.16);
-      transform: translateX(-2px);
-    }
-
-    /* Top icon: mini calendar + paws */
-    .date-header-badge {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 12px;
-      margin-bottom: 4px;
-    }
-    .mini-calendar-icon {
-      width: 44px;
-      height: 48px;
-      background: #ffffff;
-      border: 1.5px solid #d4c8c8;
-      border-radius: 10px;
-      overflow: hidden;
-      box-shadow: 0 3px 10px rgba(0,0,0,0.08);
-      display: flex;
-      flex-direction: column;
-    }
-    .mini-cal-month {
-      background: #c53838;
-      color: #ffffff;
-      font-size: 0.7rem;
-      font-weight: 800;
-      text-transform: uppercase;
-      letter-spacing: 0.5px;
-      padding: 2px 0;
-      text-align: center;
-    }
-    .mini-cal-day {
-      flex: 1;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.25rem;
-      font-weight: 800;
-      color: #2b2225;
-      font-family: 'Playfair Display', serif;
-    }
-    .paw-prints {
-      font-size: 1.6rem;
-      letter-spacing: 2px;
-      opacity: 0.85;
-      transform: rotate(-10deg);
-    }
-
-    /* Card title */
-    .date-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.65rem;
-      font-weight: 700;
-      color: #5c1f30;
-      margin: 6px 0 14px;
-      letter-spacing: -0.3px;
-    }
-
-    /* Form groups */
-    .date-form-group {
-      text-align: left;
-      margin-bottom: 14px;
-      position: relative;
-    }
-    .date-form-label {
-      display: block;
-      font-size: 1rem;
-      font-weight: 600;
-      color: #453439;
-      margin-bottom: 5px;
-      font-family: 'Montserrat', sans-serif;
-    }
-    .date-input-wrapper {
-      display: flex;
-      align-items: center;
-      background: #ffffff;
-      border: 1.5px solid #dcd3d3;
-      border-radius: 14px;
-      padding: 11px 14px;
-      cursor: pointer;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .date-input-wrapper:hover, .date-input-wrapper.active {
-      border-color: #df538a;
-      box-shadow: 0 0 0 3px rgba(223, 83, 138, 0.14);
-    }
-    .date-input-wrapper input {
-      border: none;
-      outline: none;
-      background: transparent;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1.15rem;
-      font-weight: 600;
-      color: #332327;
-      width: 100%;
-      cursor: pointer;
-    }
-    .cal-toggle-icon {
-      font-size: 1.3rem;
-      margin-left: 8px;
-      opacity: 0.85;
-      user-select: none;
-    }
-
-    .time-select-wrapper {
-      position: relative;
-      background: #ffffff;
-      border: 1.5px solid #dcd3d3;
-      border-radius: 14px;
-      padding: 0 14px;
-      transition: border-color 0.2s, box-shadow 0.2s;
-    }
-    .time-select-wrapper:focus-within {
-      border-color: #df538a;
-      box-shadow: 0 0 0 3px rgba(223, 83, 138, 0.14);
-    }
-    .time-select-wrapper select {
-      border: none;
-      outline: none;
-      background: transparent;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-      font-size: 1.08rem;
-      font-weight: 500;
-      color: #202124;
-      width: 100%;
-      padding: 12px 28px 12px 0;
-      cursor: pointer;
-      appearance: none;
-      -webkit-appearance: none;
-      -moz-appearance: none;
-    }
-    .time-select-wrapper::after {
-      content: '▾';
-      position: absolute;
-      right: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 16px;
-      color: #5f6368;
-      pointer-events: none;
-    }
-    .time-select-wrapper select option {
-      color: #202124;
-      background: #ffffff;
-      padding: 8px;
-      font-size: 16px;
-    }
-
-    /* Pink button: set the date! ♥ */
-    .btn-set-date {
-      width: 100%;
-      padding: 14px;
-      border: none;
-      border-radius: 40px;
-      background: #df538a;
-      color: #ffffff;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1.18rem;
-      font-weight: 600;
-      cursor: pointer;
-      margin-top: 8px;
-      box-shadow: 0 8px 24px rgba(223, 83, 138, 0.42);
-      transition: transform 0.2s, background 0.2s, box-shadow 0.2s;
-      letter-spacing: 0.6px;
-    }
-    .btn-set-date:hover {
-      background: #ce4077;
-      transform: translateY(-2px);
-      box-shadow: 0 12px 30px rgba(223, 83, 138, 0.65);
-    }
-    .btn-set-date:active {
-      transform: scale(0.98);
-    }
-
-    /* Error / alert toast */
-    .date-alert-msg {
-      font-size: 0.98rem;
-      color: #c5294e;
-      font-weight: 600;
-      min-height: 20px;
-      margin-top: 4px;
-      margin-bottom: 4px;
-      text-align: center;
-    }
-
-    /* Chrome Native Datepicker Style matching Card Theme */
-    .calendar-popup {
-      position: absolute;
-      top: calc(100% + 6px);
-      left: 50%;
-      transform: translateX(-50%);
-      width: min(320px, 90vw);
-      background: #ffffff;
-      color: #202124;
-      border: 1.5px solid #dadce0;
-      border-radius: 14px;
-      box-shadow: 0 12px 38px rgba(0, 0, 0, 0.22);
-      padding: 10px 8px 8px;
-      z-index: 120;
-      display: none;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-      box-sizing: border-box;
-    }
-    .calendar-popup.open {
-      display: block;
-      animation: calFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-    @keyframes calFadeIn {
-      from { opacity: 0; transform: translate(-50%, -8px); }
-      to { opacity: 1; transform: translate(-50%, 0); }
-    }
-    .cal-weekday-row {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      text-align: center;
-      font-size: 13px;
-      font-weight: 700;
-      color: #5f6368;
-      padding: 4px 4px 6px;
-      margin-bottom: 4px;
-      border-bottom: 1px solid #e8eaed;
-      user-select: none;
-    }
-    .cal-weekday-row span:first-child {
-      color: #df538a;
-      font-weight: 800;
-    }
-    .cal-scroll-body {
-      max-height: 250px;
-      overflow-y: auto;
-      overscroll-behavior: contain;
-      -webkit-overflow-scrolling: touch;
-      padding-right: 2px;
-      scrollbar-width: thin;
-      scrollbar-color: #dadce0 transparent;
-    }
-    .cal-scroll-body::-webkit-scrollbar {
-      width: 5px;
-    }
-    .cal-scroll-body::-webkit-scrollbar-track {
-      background: transparent;
-    }
-    .cal-scroll-body::-webkit-scrollbar-thumb {
-      background: #dadce0;
-      border-radius: 4px;
-    }
-    .cal-month-section {
-      margin-bottom: 14px;
-    }
-    .cal-month-section:last-child {
-      margin-bottom: 4px;
-    }
-    .cal-month-divider {
-      position: sticky;
-      top: 0;
-      background: rgba(255, 255, 255, 0.96);
-      backdrop-filter: blur(6px);
-      -webkit-backdrop-filter: blur(6px);
-      padding: 5px 6px;
-      font-size: 13px;
-      font-weight: 700;
-      color: #202124;
-      border-radius: 6px;
-      z-index: 2;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      letter-spacing: 0.3px;
-      margin-bottom: 4px;
-      border-bottom: 1px solid rgba(0, 0, 0, 0.08);
-    }
-    .cal-month-days-grid {
-      display: grid;
-      grid-template-columns: repeat(7, 1fr);
-      row-gap: 3px;
-      column-gap: 2px;
-    }
-    .cal-day-cell {
-      height: 32px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      font-weight: 500;
-      color: #202124;
-      border-radius: 6px;
-      cursor: pointer;
-      user-select: none;
-      transition: all 0.15s ease;
-    }
-    .cal-day-cell.empty {
-      cursor: default;
-      background: transparent !important;
-      border: none !important;
-    }
-    .cal-day-cell.disabled {
-      color: #bdc1c6 !important;
-      cursor: not-allowed;
-      background: transparent !important;
-      border: none !important;
-    }
-    .cal-day-cell.available {
-      font-weight: 800 !important;
-      color: #df538a !important;
-      background: rgba(223, 83, 138, 0.12) !important;
-      border: 1.5px solid #df538a !important;
-      border-radius: 6px !important;
-      box-shadow: 0 0 8px rgba(223, 83, 138, 0.28);
-      cursor: pointer;
-    }
-    .cal-day-cell.available:hover {
-      background: #df538a !important;
-      color: #ffffff !important;
-      border-color: #df538a !important;
-      box-shadow: 0 0 14px rgba(223, 83, 138, 0.5);
-      transform: scale(1.08);
-    }
-    .cal-day-cell.selected {
-      background: #1a73e8 !important;
-      color: #ffffff !important;
-      font-weight: 800 !important;
-      border-radius: 6px !important;
-      border: 1.5px solid #1a73e8 !important;
-      box-shadow: 0 0 12px rgba(26, 115, 232, 0.5) !important;
-    }
-    .cal-footer-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      margin-top: 10px;
-      padding-top: 8px;
-      border-top: 1px solid #e8eaed;
-    }
-    .cal-footer-btn {
-      background: transparent;
-      border: none;
-      color: #1a73e8;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      padding: 4px 8px;
-      border-radius: 4px;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-      transition: background 0.15s, color 0.15s;
-    }
-    .cal-footer-btn:hover {
-      background: #f1f3f4;
-    }
-
-    /* Stage 3 Confirmed Card */
+    /* Stage 3 Confirmed Card (Matcha Completed Style - Image 2) */
     .confirmed-card {
-      background: #f7f9f6;
-      color: #382a2e;
-      border-radius: 28px;
-      padding: 24px 18px 20px;
-      box-shadow: 0 25px 80px rgba(0, 0, 0, 0.7);
-      width: 100%;
-      max-width: 420px;
       text-align: center;
-      box-sizing: border-box;
     }
     .confirmed-badge {
+      width: 68px;
+      height: 68px;
+      margin: 0 auto 16px;
+      border-radius: 50%;
+      background: #ffffff;
+      box-shadow: 0 10px 26px rgba(0, 0, 0, 0.06), inset 0 1px 1px rgba(255, 255, 255, 1);
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: 2.2rem;
-      margin-bottom: 2px;
-    }
-    .confirmed-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.65rem;
-      font-weight: 700;
-      color: #5c1f30;
-      margin-bottom: 2px;
-    }
-    .confirmed-sub {
-      font-size: 0.95rem;
-      color: #8c4c5c;
-      margin-bottom: 14px;
-      font-weight: 500;
     }
     .confirmed-details-box {
       background: #ffffff;
-      border: 1.5px solid #e8dede;
-      border-radius: 16px;
-      padding: 14px 16px;
-      margin-bottom: 14px;
-      text-align: left;
+      border: 1px solid rgba(0, 0, 0, 0.06);
+      border-radius: 20px;
+      padding: 16px 20px;
+      margin: 18px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.03);
     }
     .confirm-detail-item {
       display: flex;
       align-items: center;
       gap: 12px;
-      margin-bottom: 10px;
-    }
-    .confirm-detail-item:last-child {
-      margin-bottom: 0;
+      text-align: left;
     }
     .confirm-item-icon {
-      font-size: 1.4rem;
-      width: 32px;
-      text-align: center;
+      font-size: 1.35rem;
     }
-    .confirm-item-text .confirm-item-label {
-      font-size: 0.78rem;
-      font-weight: 600;
-      color: #998388;
-      text-transform: uppercase;
-      letter-spacing: 0.6px;
-      display: block;
+    .confirm-item-text {
+      display: flex;
+      flex-direction: column;
     }
-    .confirm-item-text .confirm-item-val {
-      font-size: 1.12rem;
+    .confirm-item-label {
+      font-size: 0.74rem;
       font-weight: 700;
-      color: #3b282d;
+      color: #8c8085;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+    .confirm-item-val {
+      font-size: 1rem;
+      font-weight: 700;
+      color: #181316;
     }
     .confirmed-fun-text {
       font-size: 0.95rem;
-      color: #5c3841;
-      line-height: 1.45;
-      margin-bottom: 16px;
-    }
-    .btn-whatsapp-share {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      width: 100%;
-      padding: 14px;
-      border: none;
-      border-radius: 40px;
-      background: #25D366;
-      color: #ffffff;
-      font-family: 'Montserrat', sans-serif;
-      font-size: 1.15rem;
-      font-weight: 700;
-      text-decoration: none;
-      box-shadow: 0 8px 24px rgba(37, 211, 102, 0.4);
-      cursor: pointer;
-      margin-bottom: 12px;
-      transition: transform 0.2s, box-shadow 0.2s;
-    }
-    .btn-whatsapp-share:hover {
-      background: #20ba5a;
-      transform: translateY(-2px);
-      box-shadow: 0 12px 30px rgba(37, 211, 102, 0.65);
+      color: #5c5256;
+      font-weight: 600;
+      margin-top: 10px;
     }
     .btn-change-choice {
       border: none;
       background: transparent;
-      color: #8c364d;
-      font-size: 1.28rem;
+      color: #8c7e84;
+      font-size: 0.9rem;
       font-weight: 600;
       cursor: pointer;
-      font-family: 'Montserrat', sans-serif;
-      padding: 9px 18px;
-      border-radius: 12px;
-      text-decoration: underline;
+      font-family: var(--font-main);
+      padding: 8px 14px;
+      margin-top: 14px;
+      border-radius: 9999px;
+      transition: color 0.2s;
+    }
+    .btn-change-choice:hover {
+      color: #181316;
     }
 
-    /* Responsive mobile layout improvements */
+    /* Confetti Burst */
+    .confetti-heart {
+      position: fixed;
+      pointer-events: none;
+      z-index: 1001;
+      animation: confettiFly 1.3s ease-out forwards;
+    }
+    @keyframes confettiFly {
+      0%   { transform: translate(0,0) rotate(0deg) scale(1); opacity: 1; }
+      100% { transform: translate(var(--tx), var(--ty)) rotate(var(--rot)) scale(0.3); opacity: 0; }
+    }
+    .ripple-burst {
+      position: fixed;
+      border-radius: 50%;
+      background: radial-gradient(circle, rgba(255, 185, 205, 0.6), transparent 70%);
+      pointer-events: none;
+      transform: scale(0);
+      animation: rippleBurst 0.7s ease-out forwards;
+      z-index: 1000;
+    }
+    @keyframes rippleBurst {
+      to { transform: scale(18); opacity: 0; }
+    }
+
+    /* Responsive Mobile Layout */
     @media (max-width: 600px) {
       .envelope-wrapper {
-        margin: 160px auto 40px;
-        transform: scale(0.92);
+        margin: 16vh auto 24px;
+        transform: scale(0.96);
       }
-      #envelope.open .letter {
-        transform: translateY(-165px);
-        height: 260px;
+      .peeking-cards-container {
+        width: 320px;
+        top: -30px;
+        gap: 6px;
       }
-      .letter-header {
+      .peek-card {
+        padding: 7px 10px 16px;
+        font-size: 0.74rem;
+      }
+      #envelope {
+        width: min(360px, 92vw);
+        min-height: 165px;
+        border-radius: 30px;
+        padding: 20px 18px;
+      }
+      #envelope.open {
+        min-height: 270px;
+        padding: 26px 20px;
+      }
+      .capsule-icon-circle {
+        width: 50px;
+        height: 50px;
+        font-size: 1.5rem;
+      }
+      .capsule-title {
         font-size: 1.15rem;
       }
       .letter-message {
-        font-size: 1.22rem;
+        font-size: 1.6rem;
       }
       .buttons {
         gap: 10px;
-        margin-top: 4px;
       }
-      .btn-yes, .btn-no {
-        height: 44px;
-        padding: 0 18px;
-        font-size: 0.92rem;
-        gap: 6px;
-        white-space: nowrap;
+      .btn-yes {
+        height: 48px;
+        padding: 0 24px;
+        font-size: 0.98rem;
+      }
+      .btn-no {
+        height: 48px;
+        padding: 0 20px;
+        font-size: 0.94rem;
+      }
+      #successStage1, .date-card, .activity-card, .confirmed-card {
+        padding: 26px 20px;
+        border-radius: 28px;
       }
     }
-
   </style>
 </head>
 <body>
 
-
   <!-- Audio element for BGM -->
   <audio id="bgm" src="1st-part.mp4" loop preload="auto"></audio>
+
+  <!-- Ambient Living Pastel Mesh Gradient Orbs (Dreamy Apple / Matcha Background) -->
+  <div class="ambient-mesh-bg">
+    <div class="mesh-orb orb-1"></div>
+    <div class="mesh-orb orb-2"></div>
+    <div class="mesh-orb orb-3"></div>
+  </div>
 
   <div class="hearts-bg" id="heartsBg"></div>
   <div id="particleContainer"></div>
 
-  <!-- 3D Realistic Animated Envelope Proposal (Polished) -->
+  <!-- Modern Liquid Frosted Glass Proposal Capsule (Image 1 Style) -->
   <div class="envelope-wrapper" id="envelopeWrapper">
+    <!-- Peeking memo cards behind capsule (Exact match to Image 1) -->
+    <div class="peeking-cards-container">
+      <div class="peek-card peek-card-1">
+        <span>Nov • Dec 2026 📅</span>
+      </div>
+      <div class="peek-card peek-card-2">
+        <span>Only for you 🤍</span>
+      </div>
+      <div class="peek-card peek-card-3">
+        <span>A special day ✨</span>
+      </div>
+    </div>
+
     <div id="envelope" class="close" onclick="openEnvelope()">
-      <div class="front flap"></div>
-      <div class="heart-seal">🤍</div>
-      <div class="front pocket"></div>
-      <div class="letter" id="letterCard">
-        <div class="letter-header">To: ayeshuu 🤍</div>
-        <div class="letter-message">
-          Can I take you out?
+      <!-- Capsule Closed View (Image 1 style) -->
+      <div class="capsule-closed-view">
+        <div class="capsule-icon-circle">
+          <span>🤍</span>
         </div>
+        <div class="capsule-text-info">
+          <span class="capsule-badge">PERSONAL INVITATION</span>
+          <h3 class="capsule-title">To: ayeshuu 🤍</h3>
+          <p class="capsule-sub">Tap to open your invitation ✨</p>
+        </div>
+        <div class="capsule-arrow-btn">
+          <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </div>
+      </div>
+
+      <!-- Letter Content Revealed on Open -->
+      <div class="letter" id="letterCard">
+        <div class="letter-top-pill">
+          <span>INVITATION • FOR AYESHUU 🤍</span>
+        </div>
+        <h2 class="letter-message">
+          Can I take you out?
+        </h2>
+        <p class="letter-sub">A special day planned just for us ✨</p>
 
         <div class="buttons" id="buttonsArea">
           <button class="btn-yes" id="btnYes" onclick="onYesClick(event)">
@@ -1309,36 +1140,40 @@
         </div>
       </div>
     </div>
-    <p class="tap-hint">✨ Tap the envelope to open ✨</p>
+
+    <p class="tap-hint">✨ Tap the card to open ✨</p>
   </div>
 
   <div class="success-overlay" id="successOverlay">
-    <!-- Stage 1: Cat GIF + Yay Message -->
+    <!-- Stage 1: Cat GIF + Yay Message (Matcha Modal Style - Image 2) -->
     <div id="successStage1">
+      <div class="matcha-status-badge">
+        <span>💍</span>
+      </div>
       <div class="success-gif-wrapper" id="gifWrapper">
         <img src="will-you-be-mine-will-you-be-my-girlfriend.gif" alt="Will you be mine?" />
       </div>
-      <p class="success-message">Yay! You said YES! 🤍</p>
-      <div class="success-hearts">
-        <svg class="success-heart-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-        <svg class="success-heart-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-        <svg class="success-heart-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-        <svg class="success-heart-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-        <svg class="success-heart-icon" viewBox="0 0 24 24" fill="currentColor"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
-      </div>
+      <h2 class="modal-title">Yay! You said YES! 🤍</h2>
+      <p class="modal-sub">I've got something really special planned for us.</p>
+      
       <button type="button" class="btn-next-step" id="btnNextStep" onclick="showDateChooser()">
-        Next: Pick a Date! 🗓️🐾
+        Pick a Date 🗓️ →
       </button>
     </div>
 
-    <!-- Stage 2: Date & Time Chooser Card (Matching Reference Image) -->
+    <!-- Stage 2: Date & Time Chooser Card (Matcha Modal Style) -->
     <div id="successStage2">
       <div class="date-card" id="dateCard">
         <div class="card-top-nav">
           <button type="button" class="card-back-btn" onclick="backToSuccessStage1()">← Back</button>
         </div>
 
-        <h2 class="date-title">So... when are you free?</h2>
+        <div class="matcha-status-badge">
+          <span>📅</span>
+        </div>
+
+        <h2 class="date-title">When are you free?</h2>
+        <p class="date-sub">Choose a day & time that works best for you 🤍</p>
 
         <div class="date-form-group">
           <label class="date-form-label" for="selectedDateInput">Pick a Day 📅</label>
@@ -1384,49 +1219,62 @@
         <div id="dateAlertMsg" class="date-alert-msg"></div>
 
         <button type="button" class="btn-set-date" id="btnSetDate" onclick="submitDateChoice()">
-          next: choose plan! ♥
+          Next: Choose Plan →
         </button>
       </div>
     </div>
 
-    <!-- Stage Activity: Choose Date Type -->
+    <!-- Stage Activity: Choose Date Type (Matcha Modal Style) -->
     <div id="successStageActivity">
       <div class="activity-card">
         <div class="card-top-nav">
           <button type="button" class="card-back-btn" onclick="backToDateChooser()">← Back</button>
         </div>
+
+        <div class="matcha-status-badge">
+          <span>✨</span>
+        </div>
+
         <h2 class="activity-title">What are we doing?</h2>
         <p class="activity-sub">Choose our date plan 🤍</p>
 
         <div class="activity-options-list">
           <div class="activity-option-item" onclick="selectActivity('Movies', this)">
-            <span class="activity-opt-icon">🎬</span>
-            <div class="activity-opt-info">
-              <span class="activity-opt-title">Movies</span>
+            <div style="display:flex; align-items:center;">
+              <span class="activity-opt-icon">🎬</span>
+              <div class="activity-opt-info">
+                <span class="activity-opt-title">Movies</span>
+              </div>
             </div>
             <div class="activity-check-box">✓</div>
           </div>
 
           <div class="activity-option-item selected" onclick="selectActivity('Similipal', this)">
-            <span class="activity-opt-icon">🚗</span>
-            <div class="activity-opt-info">
-              <span class="activity-opt-title">Similipal</span>
+            <div style="display:flex; align-items:center;">
+              <span class="activity-opt-icon">🚗</span>
+              <div class="activity-opt-info">
+                <span class="activity-opt-title">Similipal</span>
+              </div>
             </div>
             <div class="activity-check-box">✓</div>
           </div>
 
           <div class="activity-option-item" onclick="selectActivity('Dominos', this)">
-            <span class="activity-opt-icon">🍕</span>
-            <div class="activity-opt-info">
-              <span class="activity-opt-title">Dominos</span>
+            <div style="display:flex; align-items:center;">
+              <span class="activity-opt-icon">🍕</span>
+              <div class="activity-opt-info">
+                <span class="activity-opt-title">Dominos</span>
+              </div>
             </div>
             <div class="activity-check-box">✓</div>
           </div>
 
           <div class="activity-option-item" id="optCustomActivity" onclick="selectActivity('Custom', this)">
-            <span class="activity-opt-icon">✨</span>
-            <div class="activity-opt-info">
-              <span class="activity-opt-title">Your Plan</span>
+            <div style="display:flex; align-items:center;">
+              <span class="activity-opt-icon">✨</span>
+              <div class="activity-opt-info">
+                <span class="activity-opt-title">Your Plan</span>
+              </div>
             </div>
             <div class="activity-check-box">✓</div>
           </div>
@@ -1440,17 +1288,17 @@
         <div id="activityAlertMsg" class="date-alert-msg"></div>
 
         <button type="button" class="btn-set-date" id="btnSetActivity" onclick="submitActivityChoice()">
-          set our plan! 🤍
+          Lock Our Plan! 🤍 →
         </button>
       </div>
     </div>
 
-    <!-- Stage 3: Confirmed Screen -->
+    <!-- Stage 3: Confirmed Screen (Matcha Completed Style - Image 2) -->
     <div id="successStage3">
       <div class="confirmed-card">
-        <div class="confirmed-badge">💍🤍🎉</div>
+        <div class="confirmed-badge">💍</div>
         <h2 class="confirmed-title">It's a Date!</h2>
-        <p class="confirmed-sub">Our Date is Locked! 🤍</p>
+        <p class="confirmed-sub">Our special date is locked 🤍</p>
 
         <div class="confirmed-details-box">
           <div class="confirm-detail-item">
