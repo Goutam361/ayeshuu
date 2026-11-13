@@ -336,67 +336,125 @@
       margin-bottom: 8px;
     }
 
-    /* Buttons inside the letter (Matcha Pill Buttons Style) */
-    .buttons {
-      display: flex;
-      gap: 14px;
-      justify-content: center;
-      align-items: center;
+    /* Sliding Decision Toggle */
+    .slider-container {
+      position: relative;
       width: 100%;
-      margin-top: 18px;
+      max-width: 280px;
+      margin: 24px auto 0;
     }
-    .btn-yes {
-      height: 52px;
-      padding: 0 36px;
-      border-radius: 9999px;
+    .slider-track {
+      position: relative;
+      width: 100%;
+      height: 60px;
       background: #181316;
-      color: #ffffff;
-      font-family: var(--font-main);
-      font-size: 1.05rem;
-      font-weight: 700;
-      letter-spacing: -0.01em;
-      border: none;
-      cursor: pointer;
-      box-shadow: 0 10px 24px rgba(24, 19, 22, 0.22);
-      transition: all 0.22s cubic-bezier(0.16, 1, 0.3, 1);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      white-space: nowrap;
-    }
-    .btn-yes:hover {
-      transform: translateY(-2px) scale(1.04);
-      box-shadow: 0 14px 32px rgba(24, 19, 22, 0.3);
-      background: #272024;
-    }
-    .btn-yes:active {
-      transform: translateY(1px) scale(0.98);
-    }
-
-    .btn-no {
-      height: 52px;
-      padding: 0 30px;
       border-radius: 9999px;
-      background: rgba(255, 255, 255, 0.92);
-      color: #382e32;
-      border: 1.5px solid rgba(0, 0, 0, 0.08);
-      font-family: var(--font-main);
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.04);
-      transition: background 0.2s, box-shadow 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 24px;
+      box-shadow: 0 10px 30px rgba(24, 19, 22, 0.25);
       user-select: none;
-      white-space: nowrap;
-      display: inline-flex;
+      -webkit-user-select: none;
+      touch-action: none;
+    }
+    .slider-label {
+      font-family: var(--font-main);
+      font-size: 0.88rem;
+      font-weight: 700;
+      cursor: pointer;
+      user-select: none;
+      -webkit-user-select: none;
+      z-index: 2;
+      padding: 10px 0;
+      transition: opacity 0.2s, transform 0.2s;
+    }
+    .slider-label:active {
+      transform: scale(0.94);
+    }
+    .slider-label-yes { color: rgba(255,255,255,0.65); }
+    .slider-label-no  { color: rgba(255,255,255,0.45); }
+    .slider-knob {
+      position: absolute;
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #ffffff;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      cursor: grab;
+      z-index: 10;
+      transition: left 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s, background 0.25s;
+      display: flex;
       align-items: center;
       justify-content: center;
-      z-index: 100;
     }
-    .btn-no:hover {
+    .slider-knob.dragging {
+      transition: box-shadow 0.15s, background 0.15s;
+      cursor: grabbing;
+    }
+    .slider-knob-icon {
+      color: #b0a5aa;
+      pointer-events: none;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+    .maintenance-tooltip {
+      position: absolute;
+      top: -46px;
+      right: 4px;
+      transform: translateY(8px) scale(0.9);
+      transform-origin: bottom right;
       background: #ffffff;
-      border-color: rgba(0, 0, 0, 0.15);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border: 1.5px solid rgba(24, 19, 22, 0.12);
+      border-radius: 12px;
+      padding: 7px 14px;
+      font-family: var(--font-main);
+      font-size: 0.8rem;
+      font-weight: 700;
+      color: #181316;
+      box-shadow: 0 10px 26px rgba(0,0,0,0.12);
+      opacity: 0;
+      transition: opacity 0.22s, transform 0.22s cubic-bezier(0.16, 1, 0.3, 1);
+      pointer-events: none;
+      white-space: nowrap;
+      z-index: 20;
+    }
+    .maintenance-tooltip::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      right: 24px;
+      width: 10px;
+      height: 10px;
+      background: #ffffff;
+      border-right: 1.5px solid rgba(24, 19, 22, 0.12);
+      border-bottom: 1.5px solid rgba(24, 19, 22, 0.12);
+      transform: rotate(45deg);
+    }
+    @keyframes tooltipWiggle {
+      0% { transform: translateY(0) scale(1) rotate(0deg); }
+      25% { transform: translateY(-3px) scale(1.04) rotate(-2deg); }
+      50% { transform: translateY(-1px) scale(1.02) rotate(2deg); }
+      75% { transform: translateY(-2px) scale(1.01) rotate(-1deg); }
+      100% { transform: translateY(0) scale(1) rotate(0deg); }
+    }
+    .maintenance-tooltip.visible {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0) scale(1);
+    }
+    .slider-hint {
+      font-family: var(--font-main);
+      font-size: 0.76rem;
+      color: #9c9298;
+      font-weight: 500;
+      margin-top: 10px;
+      text-align: center;
     }
 
     /* Tap Hint Badge */
@@ -1052,18 +1110,16 @@
       .letter-message {
         font-size: 1.6rem;
       }
-      .buttons {
-        gap: 10px;
+      .slider-container {
+        max-width: 260px;
       }
-      .btn-yes {
-        height: 48px;
-        padding: 0 24px;
-        font-size: 0.98rem;
-      }
-      .btn-no {
-        height: 48px;
+      .slider-track {
+        height: 54px;
         padding: 0 20px;
-        font-size: 0.94rem;
+      }
+      .slider-knob {
+        width: 44px;
+        height: 44px;
       }
       #successStage1, .date-card, .activity-card, .confirmed-card {
         padding: 26px 20px;
@@ -1130,13 +1186,19 @@
         </h2>
         <p class="letter-sub">A special day planned just for us ✨</p>
 
-        <div class="buttons" id="buttonsArea">
-          <button class="btn-yes" id="btnYes" onclick="onYesClick(event)">
-            🤍 Yes!
-          </button>
-          <button class="btn-no" id="btnNo">
-            NO 🤨
-          </button>
+        <div class="slider-container" id="sliderContainer">
+          <div class="slider-track" id="sliderTrack">
+            <span class="slider-label slider-label-yes" id="labelYes">Yes 🤍</span>
+            <div class="slider-knob" id="sliderKnob">
+              <div class="slider-knob-icon">
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="15 18 9 12 15 6"/></svg>
+                <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round"><polyline points="9 18 15 12 9 6"/></svg>
+              </div>
+            </div>
+            <span class="slider-label slider-label-no" id="labelNo">No 🤨</span>
+          </div>
+          <div class="maintenance-tooltip" id="maintenanceTooltip">Under maintenance 🚧</div>
+          <p class="slider-hint">← Slide to choose →</p>
         </div>
       </div>
     </div>
@@ -1422,244 +1484,194 @@
   }
 
   /* ─────────────────────────────────────────
-     NO BUTTON – DYNAMIC RANDOM DODGE ANIMATIONS & PHRASES
+     SLIDER DECISION TOGGLE (YES ← 🔘 → NO)
   ──────────────────────────────────────── */
-  const btnNo = document.getElementById('btnNo');
-  const DODGE_DIST = 80;
-  const MARGIN = 18;
-  let hasDodged = false;
-  let noX = 0, noY = 0;
-  let lastDodgeTime = 0;
-  let currentCornerIndex = -1;
+  const sliderTrack = document.getElementById('sliderTrack');
+  const sliderKnob = document.getElementById('sliderKnob');
+  const sliderContainer = document.getElementById('sliderContainer');
+  const maintenanceTooltip = document.getElementById('maintenanceTooltip');
+  const labelYes = document.getElementById('labelYes');
+  const labelNo = document.getElementById('labelNo');
+
   let dodgeCount = 0;
   let hasClickedYes = false;
   let noDodgeTimer = null;
   let lastReportedDodgeCount = 0;
 
-  const NO_BUTTON_TEXTS = [
-    "NO 🤨",
-    "Can't touch this! 😜",
-    "Too slow! 💨",
-    "Try again! 🏃💨",
-    "Nope! 🙈",
-    "Catch me! 🚀",
-    "Hehe miss me? 😝",
-    "Still NO? 🥺",
-    "Nice try! 😉",
-    "Over here! 👉",
-    "Almost! 🤪",
-    "Missed me! 🙃"
+  const MAINTENANCE_MSGS = [
+    "Under maintenance 🚧",
+    "Server 404: 'NO' not found 🤖",
+    "Feature disabled by admin 😉",
+    "Nice try! Still under maintenance 🛠️",
+    "Service unavailable for 'NO' 💅",
+    "Only 'YES' is currently supported 🤍",
+    "Work in progress... try YES 🤭",
+    "Error 418: I'm a teapot, not a NO 🫖",
+    "Button out of order 🚫",
+    "Nope, sliding right is restricted 🔒",
+    "Option temporarily offline 📡",
+    "You know the only answer is YES 🤍"
   ];
 
-  const DODGE_ANIMATIONS = [
-    {
-      // 1. 360 Spin Zoom
-      name: "spin-zoom",
-      transition: "transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1)",
-      getTransform: (x, y) => `translate3d(${x}px, ${y}px, 0) rotate(${Math.random() > 0.5 ? 360 : -360}deg) scale(1.12)`
-    },
-    {
-      // 2. Elastic Squash & Bounce
-      name: "elastic-bounce",
-      transition: "transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.45)",
-      getTransform: (x, y) => `translate3d(${x}px, ${y}px, 0) scale(1.22, 0.82) rotate(${Math.random() * 16 - 8}deg)`
-    },
-    {
-      // 3. Rocket Tilt
-      name: "rocket-tilt",
-      transition: "transform 0.3s cubic-bezier(0.25, 1, 0.5, 1)",
-      getTransform: (x, y) => `translate3d(${x}px, ${y}px, 0) rotate(${Math.random() > 0.5 ? 20 : -20}deg) scale(1.15)`
-    },
-    {
-      // 4. 3D Perspective Card Flip
-      name: "flip-glide",
-      transition: "transform 0.38s cubic-bezier(0.68, -0.4, 0.265, 1.4)",
-      getTransform: (x, y) => `translate3d(${x}px, ${y}px, 0) rotateY(180deg) rotateZ(${Math.random() > 0.5 ? 14 : -14}deg)`
-    },
-    {
-      // 5. Flash Speed Dash
-      name: "flash-dash",
-      transition: "transform 0.26s cubic-bezier(0.16, 1, 0.3, 1)",
-      getTransform: (x, y) => `translate3d(${x}px, ${y}px, 0) scale(0.92) rotate(${Math.random() * 24 - 12}deg)`
-    },
-    {
-      // 6. Super Springy Pop
-      name: "spring-pop",
-      transition: "transform 0.42s cubic-bezier(0.34, 1.8, 0.64, 1)",
-      getTransform: (x, y) => `translate3d(${x}px, ${y}px, 0) scale(1.25)`
-    }
-  ];
+  let isDragging = false;
+  let sliderStartX = 0;
+  let knobStartLeft = 50;
+  let tooltipTimeout = null;
 
-  function ensureFixedPosition() {
-    if (!hasDodged) {
-      const rect = btnNo.getBoundingClientRect();
-      noX = rect.left;
-      noY = rect.top;
-      btnNo.style.position = 'fixed';
-      btnNo.style.left = '0px';
-      btnNo.style.top  = '0px';
-      btnNo.style.transform = `translate3d(${noX}px, ${noY}px, 0)`;
-      btnNo.style.margin = '0';
-      btnNo.style.zIndex = '99999';
-      document.body.appendChild(btnNo);
-      hasDodged = true;
+  function getKnobPct() {
+    if (!sliderKnob) return 50;
+    const styleLeft = sliderKnob.style.left;
+    return styleLeft ? parseFloat(styleLeft) : 50;
+  }
+
+  function setKnobPct(pct) {
+    if (!sliderKnob) return;
+    const clamped = Math.max(14, Math.min(86, pct));
+    sliderKnob.style.left = clamped + '%';
+
+    // Interactive glow feedback
+    if (clamped < 38) {
+      const intensity = (38 - clamped) / 24;
+      sliderKnob.style.boxShadow = `0 4px 20px rgba(52, 199, 89, ${0.5 * intensity})`;
+    } else if (clamped > 62) {
+      const intensity = (clamped - 62) / 24;
+      sliderKnob.style.boxShadow = `0 4px 20px rgba(255, 69, 58, ${0.5 * intensity})`;
+    } else {
+      sliderKnob.style.boxShadow = '0 4px 16px rgba(0,0,0,0.12)';
     }
   }
 
-  function activateAndDodge(e) {
-    const now = Date.now();
-    if (now - lastDodgeTime < 180) {
-      if (e && e.cancelable) e.preventDefault();
-      return;
-    }
-    lastDodgeTime = now;
-
-    if (e) {
-      if (e.cancelable) e.preventDefault();
-      if (e.stopPropagation) e.stopPropagation();
-    }
-
-    // Only dodge if envelope is open
-    const env = document.getElementById('envelope');
-    if (env && !env.classList.contains('open')) return;
-
-    ensureFixedPosition();
-
-    if (navigator.vibrate) {
-      try { navigator.vibrate(50); } catch (err) {}
-    }
-
-    let originX = undefined, originY = undefined;
-    if (e) {
-      if (e.touches && e.touches.length > 0) {
-        originX = e.touches[0].clientX;
-        originY = e.touches[0].clientY;
-      } else if (e.changedTouches && e.changedTouches.length > 0) {
-        originX = e.changedTouches[0].clientX;
-        originY = e.changedTouches[0].clientY;
-      } else if (typeof e.clientX === 'number' && (e.clientX !== 0 || e.clientY !== 0)) {
-        originX = e.clientX;
-        originY = e.clientY;
-      }
-    }
-
-    dodge(originX, originY);
+  function snapToCenter() {
+    if (!sliderKnob) return;
+    sliderKnob.classList.remove('dragging');
+    sliderKnob.style.left = '50%';
+    sliderKnob.style.boxShadow = '0 4px 16px rgba(0,0,0,0.12)';
   }
 
-  function dodge(fromX, fromY) {
+  function showMaintenanceMsg() {
     dodgeCount++;
     scheduleNoAttemptsNotification();
-    // Change button text dynamically to a playful phrase
-    const nextPhrase = NO_BUTTON_TEXTS[dodgeCount % NO_BUTTON_TEXTS.length];
-    btnNo.innerText = nextPhrase;
-
-    const w = btnNo.offsetWidth  || 120;
-    const h = btnNo.offsetHeight || 44;
-    const winW = window.innerWidth;
-    const winH = window.innerHeight;
-    const minX = MARGIN;
-    const maxX = Math.max(MARGIN, winW - w - MARGIN);
-    const minY = MARGIN + 12;
-    const maxY = Math.max(MARGIN, winH - h - MARGIN - 12);
-
-    // Current button center
-    const curBtnCenterX = noX + w / 2;
-    const curBtnCenterY = noY + h / 2;
-
-    // Interaction / cursor point (fallback to current button center if undefined)
-    const curX = (typeof fromX === 'number') ? fromX : curBtnCenterX;
-    const curY = (typeof fromY === 'number') ? fromY : curBtnCenterY;
-
-    // Direction vector away from cursor / touch
-    let dx = curBtnCenterX - curX;
-    let dy = curBtnCenterY - curY;
-    let angle = Math.atan2(dy, dy !== 0 || dx !== 0 ? dx : 0.01);
-
-    // If cursor was right on center, pick a totally random angle
-    if (Math.abs(dx) < 2 && Math.abs(dy) < 2) {
-      angle = Math.random() * Math.PI * 2;
-    } else {
-      // Add heavy unpredictable angular spread (-85deg to +85deg)
-      const spread = (Math.random() * 170 - 85) * (Math.PI / 180);
-      angle += spread;
+    if (navigator.vibrate) {
+      try { navigator.vibrate([40, 50, 40]); } catch (err) {}
     }
+    const msg = MAINTENANCE_MSGS[(dodgeCount - 1) % MAINTENANCE_MSGS.length];
+    if (maintenanceTooltip) {
+      maintenanceTooltip.textContent = msg;
+      maintenanceTooltip.classList.add('visible');
+      maintenanceTooltip.style.animation = 'none';
+      void maintenanceTooltip.offsetWidth; // re-trigger animation
+      maintenanceTooltip.style.animation = 'tooltipWiggle 0.4s ease';
 
-    // 2x increased dynamic jump distance (~270px to 460px) for energetic, unpredictable dodging
-    const jumpDist = 270 + Math.random() * 190;
-
-    let targetX = curBtnCenterX + Math.cos(angle) * jumpDist - w / 2;
-    let targetY = curBtnCenterY + Math.sin(angle) * jumpDist - h / 2;
-
-    // If target jumps close to or beyond screen edges, bounce back inwards randomly
-    if (targetX < minX || targetX > maxX || targetY < minY || targetY > maxY) {
-      const centerScreenX = winW / 2;
-      const centerScreenY = winH / 2;
-      const inwardAngle = Math.atan2(centerScreenY - curBtnCenterY, centerScreenX - curBtnCenterX) + (Math.random() * 1.4 - 0.7);
-      const safeDist = 240 + Math.random() * 160;
-      targetX = curBtnCenterX + Math.cos(inwardAngle) * safeDist - w / 2;
-      targetY = curBtnCenterY + Math.sin(inwardAngle) * safeDist - h / 2;
+      if (tooltipTimeout) clearTimeout(tooltipTimeout);
+      tooltipTimeout = setTimeout(() => {
+        maintenanceTooltip.classList.remove('visible');
+      }, 2400);
     }
-
-    // Clamp strictly within viewport margins
-    noX = Math.min(Math.max(minX, targetX), maxX);
-    noY = Math.min(Math.max(minY, targetY), maxY);
-
-    // Pick a random dynamic animation from the animation pool
-    const anim = DODGE_ANIMATIONS[Math.floor(Math.random() * DODGE_ANIMATIONS.length)];
-    btnNo.style.transition = anim.transition;
-    btnNo.style.transform = anim.getTransform(noX, noY);
-
-    // Smoothly stabilize button orientation after animation
-    setTimeout(() => {
-      btnNo.style.transition = 'transform 0.22s ease, background 0.2s, box-shadow 0.2s';
-      btnNo.style.transform = `translate3d(${noX}px, ${noY}px, 0) scale(1) rotate(0deg)`;
-    }, 380);
   }
 
-  // Desktop Mouse Movement Proximity
-  document.addEventListener('mousemove', function(e) {
+  function onSliderDown(e) {
+    if (hasClickedYes) return;
     const env = document.getElementById('envelope');
     if (env && !env.classList.contains('open')) return;
-    const rect = btnNo.getBoundingClientRect();
-    const cx = rect.left + rect.width  / 2;
-    const cy = rect.top  + rect.height / 2;
-    if (Math.hypot(e.clientX - cx, e.clientY - cy) < DODGE_DIST) {
-      activateAndDodge(e);
-    }
-  });
 
-  // Mobile Touch Proximity
-  document.addEventListener('touchmove', function(e) {
-    const env = document.getElementById('envelope');
-    if (env && !env.classList.contains('open')) return;
-    if (!e.touches || e.touches.length === 0) return;
-    const t = e.touches[0];
-    const rect = btnNo.getBoundingClientRect();
-    const cx = rect.left + rect.width  / 2;
-    const cy = rect.top  + rect.height / 2;
-    if (Math.hypot(t.clientX - cx, t.clientY - cy) < DODGE_DIST) {
-      activateAndDodge(e);
-    }
-  }, { passive: true });
+    isDragging = true;
+    if (sliderKnob) sliderKnob.classList.add('dragging');
+    const clientX = (e.touches && e.touches.length > 0) ? e.touches[0].clientX : e.clientX;
+    sliderStartX = clientX;
+    knobStartLeft = getKnobPct();
+    if (e.cancelable && e.type !== 'touchstart') e.preventDefault();
+  }
 
-  document.addEventListener('touchstart', function(e) {
-    const env = document.getElementById('envelope');
-    if (env && !env.classList.contains('open')) return;
-    if (!e.touches || e.touches.length === 0) return;
-    const t = e.touches[0];
-    const rect = btnNo.getBoundingClientRect();
-    const cx = rect.left + rect.width  / 2;
-    const cy = rect.top  + rect.height / 2;
-    if (Math.hypot(t.clientX - cx, t.clientY - cy) < DODGE_DIST) {
-      activateAndDodge(e);
-    }
-  }, { passive: true });
+  function onSliderMove(e) {
+    if (!isDragging || hasClickedYes) return;
+    const clientX = (e.touches && e.touches.length > 0) ? e.touches[0].clientX : e.clientX;
+    if (!sliderTrack) return;
+    const trackRect = sliderTrack.getBoundingClientRect();
+    const trackWidth = trackRect.width;
+    if (trackWidth <= 0) return;
 
-  // Direct element triggers
-  btnNo.addEventListener('mouseenter', activateAndDodge);
-  btnNo.addEventListener('touchstart', activateAndDodge, { passive: false });
-  btnNo.addEventListener('pointerdown', activateAndDodge, { passive: false });
-  btnNo.addEventListener('click', activateAndDodge);
+    const deltaX = clientX - sliderStartX;
+    const deltaPct = (deltaX / trackWidth) * 100;
+    const newPct = knobStartLeft + deltaPct;
+    setKnobPct(newPct);
+  }
+
+  function onSliderUp(e) {
+    if (!isDragging) return;
+    isDragging = false;
+    const curPct = getKnobPct();
+
+    // Slide LEFT <= 22% -> YES!
+    if (curPct <= 24) {
+      if (sliderKnob) sliderKnob.style.left = '14%';
+      setTimeout(() => {
+        const rect = sliderKnob ? sliderKnob.getBoundingClientRect() : null;
+        const fakeE = rect ? {
+          clientX: rect.left + rect.width / 2,
+          clientY: rect.top + rect.height / 2
+        } : null;
+        onYesClick(fakeE);
+      }, 120);
+    }
+    // Slide RIGHT >= 76% -> NO (Under maintenance!)
+    else if (curPct >= 76) {
+      showMaintenanceMsg();
+      snapToCenter();
+    }
+    // Released in middle -> snap back
+    else {
+      snapToCenter();
+    }
+  }
+
+  if (sliderKnob) {
+    sliderKnob.addEventListener('mousedown', onSliderDown);
+    sliderKnob.addEventListener('touchstart', onSliderDown, { passive: true });
+  }
+
+  document.addEventListener('mousemove', onSliderMove);
+  document.addEventListener('touchmove', onSliderMove, { passive: true });
+  document.addEventListener('mouseup', onSliderUp);
+  document.addEventListener('touchend', onSliderUp);
+
+  if (sliderTrack) {
+    sliderTrack.addEventListener('click', (e) => {
+      e.stopPropagation();
+    });
+  }
+
+  // Tapping "Yes" label also smoothly slides knob left & triggers Yes
+  if (labelYes) {
+    labelYes.addEventListener('click', (e) => {
+      if (hasClickedYes) return;
+      const env = document.getElementById('envelope');
+      if (env && !env.classList.contains('open')) return;
+      if (sliderKnob) {
+        sliderKnob.style.left = '14%';
+        sliderKnob.style.boxShadow = '0 4px 20px rgba(52, 199, 89, 0.6)';
+      }
+      setTimeout(() => {
+        onYesClick(e);
+      }, 200);
+    });
+  }
+
+  // Tapping "No" label triggers maintenance message and bounces knob
+  if (labelNo) {
+    labelNo.addEventListener('click', (e) => {
+      if (hasClickedYes) return;
+      const env = document.getElementById('envelope');
+      if (env && !env.classList.contains('open')) return;
+      if (sliderKnob) {
+        sliderKnob.style.left = '76%';
+        sliderKnob.style.boxShadow = '0 4px 20px rgba(255, 69, 58, 0.6)';
+        setTimeout(() => {
+          snapToCenter();
+        }, 220);
+      }
+      showMaintenanceMsg();
+    });
+  }
 
   /* ─────────────────────────────────────────
      YES BUTTON CLICK
@@ -1725,7 +1737,7 @@
       document.getElementById('successOverlay').classList.add('visible');
     }, 300);
 
-    btnNo.style.display = 'none';
+    if (sliderContainer) sliderContainer.style.display = 'none';
 
     // Send instant email notification
     sendYesEmail();
