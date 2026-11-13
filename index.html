@@ -1491,9 +1491,13 @@
   ──────────────────────────────────────── */
   const bgm = document.getElementById('bgm');
   let isPlaying = false;
+  if (bgm) {
+    bgm.volume = 0.5;
+  }
 
   function playBgm() {
     if (bgm && !isPlaying) {
+      bgm.volume = 0.5;
       bgm.muted = false;
       const p = bgm.play();
       if (p !== undefined) {
@@ -1820,6 +1824,7 @@
     }
     if (bgm) {
       bgm.src = '2nd-part.mp4';
+      bgm.volume = 1.0;
       bgm.currentTime = 0;
       bgm.play().then(() => {
         isPlaying = true;
