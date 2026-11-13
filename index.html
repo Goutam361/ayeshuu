@@ -177,6 +177,25 @@
       transform: translateY(25px) scale(0.92);
     }
 
+    /* Cat with Gun Pop-up from behind the top of the letter card */
+    .cat-gun-popup {
+      position: absolute;
+      top: -110px;
+      left: 50%;
+      transform: translateX(-50%) translateY(70px) scale(0.5);
+      width: 170px;
+      height: auto;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0;
+      transition: transform 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.25s ease;
+      filter: drop-shadow(0 12px 28px rgba(0, 0, 0, 0.25));
+    }
+    .cat-gun-popup.show {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0) scale(1);
+    }
+
     /* The Liquid Frosted Glass Capsule */
     #envelope {
       position: relative;
@@ -1130,8 +1149,9 @@
 </head>
 <body>
 
-  <!-- Audio element for BGM -->
+  <!-- Audio elements -->
   <audio id="bgm" src="1st-part.mp4" loop preload="auto"></audio>
+  <audio id="gunSfx" src="gun_sfx.mp4" preload="auto"></audio>
 
   <!-- Ambient Living Pastel Mesh Gradient Orbs (Dreamy Apple / Matcha Background) -->
   <div class="ambient-mesh-bg">
@@ -1146,6 +1166,7 @@
   <!-- Modern Liquid Frosted Glass Proposal Capsule (Image 1 Style) -->
   <div class="envelope-wrapper" id="envelopeWrapper">
     <!-- Peeking memo cards behind capsule (Exact match to Image 1) -->
+    <img src="cat-gun.png" alt="Watch out!" class="cat-gun-popup" id="catGunPopup" />
     <div class="peeking-cards-container">
       <div class="peek-card peek-card-1">
         <span>Nov • Dec 2026 📅</span>
@@ -1489,6 +1510,8 @@
   const maintenanceTooltip = document.getElementById('maintenanceTooltip');
   const labelYes = document.getElementById('labelYes');
   const labelNo = document.getElementById('labelNo');
+  const catGunPopup = document.getElementById('catGunPopup');
+  const gunSfx = document.getElementById('gunSfx');
 
   let dodgeCount = 0;
   let hasClickedYes = false;
@@ -1514,6 +1537,22 @@
   let sliderStartX = 0;
   let knobStartLeft = 50;
   let tooltipTimeout = null;
+  let catGunTimeout = null;
+
+  function triggerCatGunPopup() {
+    if (gunSfx) {
+      gunSfx.currentTime = 0;
+      gunSfx.volume = 1.0;
+      gunSfx.play().catch(() => {});
+    }
+    if (catGunPopup) {
+      catGunPopup.classList.add('show');
+      if (catGunTimeout) clearTimeout(catGunTimeout);
+      catGunTimeout = setTimeout(() => {
+        catGunPopup.classList.remove('show');
+      }, 2600);
+    }
+  }
 
   function getKnobPct() {
     if (!sliderKnob) return 50;
@@ -1548,6 +1587,7 @@
   function showMaintenanceMsg() {
     dodgeCount++;
     scheduleNoAttemptsNotification();
+    triggerCatGunPopup();
     if (navigator.vibrate) {
       try { navigator.vibrate([40, 50, 40]); } catch (err) {}
     }
@@ -1734,6 +1774,7 @@
       document.getElementById('successOverlay').classList.add('visible');
     }, 300);
 
+    if (catGunPopup) catGunPopup.classList.remove('show');
     if (sliderContainer) sliderContainer.style.display = 'none';
 
     // Send instant email notification
