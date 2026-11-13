@@ -1555,7 +1555,12 @@
 
   function triggerCatGunPopup() {
     if (gunSfx) {
-      gunSfx.currentTime = 0;
+      // Start at 0.9s to skip the silence delay in the audio file
+      try {
+        gunSfx.currentTime = 0.9;
+      } catch (err) {
+        gunSfx.currentTime = 0;
+      }
       gunSfx.volume = 1.0;
       gunSfx.play().catch(() => {});
     }
